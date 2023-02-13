@@ -1,10 +1,10 @@
 import pygame
-from drawboard import NonCollideTiles
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, collide_tiles, poweup_tiles, noncollide_tiles):
+    def __init__(self, x, y, width, height, collide_tiles):
         super().__init__()
+
         self.width = width
         self.height = height
         self.name = 'blue'
@@ -14,50 +14,69 @@ class Player(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect(topleft=(x, y))
         self.collide_tiles = collide_tiles
-        self.powerup_tiles = poweup_tiles
-        self.noncollide_tiles = noncollide_tiles
+
         self.hp = 100
         self.player_direction = 0
-        self.player_speed = 8
+        self.player_speed = 64
 
-    def can_move(self):
-        return self.rect.x % 64 == 0 and self.rect.y % 64 == 0
+        #   BINDER
+        self.isMoving = False
+
+        self.nextX = 0
+        self.nextY = 0
+
+        self.speedX = 0
+        self.speedY = 0
 
     def is_alive(self):
         return self.hp > 0
 
-    def collide_powerup(self):
-        powerup_list = pygame.sprite.spritecollide(
-            self, self.powerup_tiles, True)
+    def moving(self):
+        if not self.isMoving:
+            return
 
-        for powerup in powerup_list:
-            if powerup.type_of_powerup == 'attack':
-                self.hp += 10
-                # substitute with noncollide tile
-                self.noncollide_tiles.add(NonCollideTiles(
-                    powerup.rect.x, powerup.rect.y, 64, 64, 'white')
-                )
-                powerup.kill()
+        if (self.rect.x == self.nextX and self.rect.y == self.nextY):
+            self.isMoving = False
+            print(self.rect.x, self.rect.y)
+        else:
+            self.rect.x += self.speedX
+            self.rect.y += self.speedY
 
     def move(self):
         keys = pygame.key.get_pressed()
 
-        # check collision
+        if(self.isMoving):
+            return
+
         if keys[pygame.K_d]:
-            self.rect.x += self.player_speed
             self.player_direction = 0
+            self.nextX = self.rect.x + 64
+            self.nextY = self.rect.y
 
         elif keys[pygame.K_a]:
-            self.rect.x -= self.player_speed
             self.player_direction = 1
+            self.nextX = self.rect.x - 64
+            self.nextY = self.rect.y
 
         elif keys[pygame.K_w]:
-            self.rect.y -= self.player_speed
             self.player_direction = 2
+            self.nextX = self.rect.x
+            self.nextY = self.rect.y - 64
 
         elif keys[pygame.K_s]:
-            self.rect.y += self.player_speed
             self.player_direction = 3
+            self.nextX = self.rect.x
+            self.nextY = self.rect.y + 64
+
+        else:
+            return
+
+        if (self.check_collision(self.nextX, self.nextY)) == False:
+            self.isMoving = True
+            self.speedX = (self.nextX - self.rect.x) / 4
+            self.speedY = (self.nextY - self.rect.y) / 4
+            print(self.rect.x, self.rect.y)
+
 
     def draw(self):
 
@@ -73,34 +92,15 @@ class Player(pygame.sprite.Sprite):
         elif self.player_direction == 1:
             self.image = player_left
 
-        elif self.player_direction == 2:
-            self.image = player_left
-
-        elif self.player_direction == 3:
-            self.image = player_right
-
         self.image = pygame.transform.scale(
             self.image, (self.width, self.height))
 
-    def check_collision(self):
-        # check collision on each axis separately using player direction to determine which axis to check
-        # 0 - RIGHT, 1 - LEFT, 2 - UP, 3 - DOWN
+    def check_collision(self, x, y):
+        for i in self.collide_tiles:
+            if (x == i.rect.x and y == i.rect.y):
+                return True
+        return False
 
-        collide_list = pygame.sprite.spritecollide(
-            self, self.collide_tiles, False)
-
-        if len(collide_list) > 0:
-            if self.player_direction == 0:
-                self.rect.x -= self.player_speed
-
-            elif self.player_direction == 1:
-                self.rect.x += self.player_speed
-
-            elif self.player_direction == 2:
-                self.rect.y += self.player_speed
-
-            else:
-                self.rect.y -= self.player_speed
 
     def kill(self):
         super().kill()
@@ -108,28 +108,11 @@ class Player(pygame.sprite.Sprite):
         pygame.quit()
         quit()
 
-    def animate(self):
-        if self.player_direction == 0:
-            self.rect.x += self.player_speed
-
-        elif self.player_direction == 1:
-            self.rect.x -= self.player_speed
-
-        elif self.player_direction == 2:
-            self.rect.y -= self.player_speed
-
-        else:
-            self.rect.y += self.player_speed
-
     def update(self):
         if not self.is_alive():  # TODO: add game over screen
             self.kill()
             return
 
-        if self.can_move():
-            self.move()
-        else:
-            self.animate()
-        self.check_collision()
+        self.moving()
+        self.move()
         self.draw()
-        self.collide_powerup()
