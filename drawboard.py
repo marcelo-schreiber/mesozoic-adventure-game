@@ -27,7 +27,7 @@ def draw_board(level):
     # create new sprite group
     collide_tiles = pygame.sprite.Group()
     noncollide_tiles = pygame.sprite.Group()
-    TILE_SIZE = 32
+    TILE_SIZE = 64
     # loop through level array
     for row in range(len(level)):
         for col in range(len(level[row])):

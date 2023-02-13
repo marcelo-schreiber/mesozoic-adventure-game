@@ -17,7 +17,7 @@ class Player(pygame.sprite.Sprite):
 
         self.hp = 100
         self.player_direction = 0
-        self.player_speed = 4
+        self.player_speed = 64
 
     def is_alive(self):
         return self.hp > 0
