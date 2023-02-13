@@ -14,9 +14,9 @@ timer = pygame.time.Clock()
 pygame.display.set_caption('Blue\'s Adventure in the Mesozoic Era')
 
 # sprite groups
-collide_tiles, noncollide_tiles = draw_board(arrayMap)
+collide_tiles, noncollide_tiles, powerup_tiles = draw_board(arrayMap)
 player_group = pygame.sprite.GroupSingle()
-player = Player(64, 64, 64, 64, collide_tiles)
+player = Player(64, 64, 64, 64, collide_tiles, powerup_tiles, noncollide_tiles)
 player_group.add(player)
 
 enemy_group = pygame.sprite.Group()
@@ -38,6 +38,7 @@ def main():
 
         collide_tiles.draw(screen)
         noncollide_tiles.draw(screen)
+        powerup_tiles.draw(screen)
 
         player_group.draw(screen)
         player_group.update()

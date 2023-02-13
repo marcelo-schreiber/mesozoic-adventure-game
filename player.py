@@ -1,10 +1,10 @@
 import pygame
+from drawboard import NonCollideTiles
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, collide_tiles):
+    def __init__(self, x, y, width, height, collide_tiles, poweup_tiles, noncollide_tiles):
         super().__init__()
-
         self.width = width
         self.height = height
         self.name = 'blue'
@@ -14,13 +14,30 @@ class Player(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect(topleft=(x, y))
         self.collide_tiles = collide_tiles
-
+        self.powerup_tiles = poweup_tiles
+        self.noncollide_tiles = noncollide_tiles
         self.hp = 100
         self.player_direction = 0
-        self.player_speed = 64
+        self.player_speed = 8
+
+    def can_move(self):
+        return self.rect.x % 64 == 0 and self.rect.y % 64 == 0
 
     def is_alive(self):
         return self.hp > 0
+
+    def collide_powerup(self):
+        powerup_list = pygame.sprite.spritecollide(
+            self, self.powerup_tiles, True)
+
+        for powerup in powerup_list:
+            if powerup.type_of_powerup == 'attack':
+                self.hp += 10
+                # substitute with noncollide tile
+                self.noncollide_tiles.add(NonCollideTiles(
+                    powerup.rect.x, powerup.rect.y, 64, 64, 'white')
+                )
+                powerup.kill()
 
     def move(self):
         keys = pygame.key.get_pressed()
@@ -91,11 +108,28 @@ class Player(pygame.sprite.Sprite):
         pygame.quit()
         quit()
 
+    def animate(self):
+        if self.player_direction == 0:
+            self.rect.x += self.player_speed
+
+        elif self.player_direction == 1:
+            self.rect.x -= self.player_speed
+
+        elif self.player_direction == 2:
+            self.rect.y -= self.player_speed
+
+        else:
+            self.rect.y += self.player_speed
+
     def update(self):
         if not self.is_alive():  # TODO: add game over screen
             self.kill()
             return
 
-        self.move()
+        if self.can_move():
+            self.move()
+        else:
+            self.animate()
         self.check_collision()
         self.draw()
+        self.collide_powerup()

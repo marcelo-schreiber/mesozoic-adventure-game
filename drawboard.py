@@ -11,6 +11,17 @@ class CollideTile(pygame.sprite.Sprite):
         self.rect.y = y
 
 
+class PowerUpTile(pygame.sprite.Sprite):
+    def __init__(self, x, y, width, height, color):
+        super().__init__()
+        self.image = pygame.Surface([width, height])
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.type_of_powerup = 'attack'
+
+
 class NonCollideTiles(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, color):
         super().__init__()
@@ -27,6 +38,7 @@ def draw_board(level):
     # create new sprite group
     collide_tiles = pygame.sprite.Group()
     noncollide_tiles = pygame.sprite.Group()
+    powerup_tiles = pygame.sprite.Group()
     TILE_SIZE = 64
     # loop through level array
     for row in range(len(level)):
@@ -37,5 +49,8 @@ def draw_board(level):
             elif level[row][col] == 0:
                 noncollide_tiles.add(NonCollideTiles(
                     col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, 'white'))
+            elif level[row][col] == 2:
+                powerup_tiles.add(PowerUpTile(
+                    col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, 'green'))
 
-    return collide_tiles, noncollide_tiles
+    return collide_tiles, noncollide_tiles, powerup_tiles
