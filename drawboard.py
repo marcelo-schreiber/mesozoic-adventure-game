@@ -1,5 +1,4 @@
 import pygame
-from settings import *
 
 class CollideTile(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, color):
@@ -25,7 +24,7 @@ class PowerUpTile(pygame.sprite.Sprite):
 
     def kill(self, collide_tiles):
         collide_tiles.remove(self)
-        collide_tiles.add(NonCollideTiles(self.rect.x, self.rect.y, TILE_SIZE, TILE_SIZE, 'white'))
+        collide_tiles.add(NonCollideTiles(self.rect.x, self.rect.y, 64, 64, 'white'))
 
 
 
@@ -47,7 +46,7 @@ def draw_board(level):
     collide_tiles = pygame.sprite.Group()
     noncollide_tiles = pygame.sprite.Group()
     powerup_tiles = pygame.sprite.Group()
-    #TILE_SIZE = 64
+    TILE_SIZE = 64
     # loop through level array
     for row in range(len(level)):
         for col in range(len(level[row])):
@@ -60,5 +59,8 @@ def draw_board(level):
             elif level[row][col] == 2:
                 collide_tiles.add(PowerUpTile(
                     col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, 'green', 'attack'))
+            elif level[row][col] == 3:
+                collide_tiles.add(PowerUpTile(
+                    col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, 'blue', 'invincibilidade'))
 
     return collide_tiles, noncollide_tiles, powerup_tiles

@@ -20,7 +20,7 @@ player = Player(64, 64, 64, 64, collide_tiles)
 player_group.add(player)
 
 enemy_group = pygame.sprite.Group()
-enemy_1 = Enemy('eoraptor', 128, 128, 64, 64, 10, 0.5, player)
+enemy_1 = Enemy('eoraptor', 320, 320, 64, 64, 10, 0.5)
 enemy_group.add(enemy_1)
 
 
@@ -44,7 +44,7 @@ def main():
         player_group.update()
 
         enemy_group.draw(screen)
-        enemy_group.update()
+        enemy_group.update(arrayMap, player)
 
         timer.tick(FPS)
         pygame.display.update()  # update the display

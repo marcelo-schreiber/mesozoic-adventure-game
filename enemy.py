@@ -2,14 +2,12 @@ import pygame
 
 font = pygame.font.SysFont('freesansbold.ttf', 24)
 
-
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, name, enemy_x, enemy_y, width, height, hp, damage, player):
+    def __init__(self, name, enemy_x, enemy_y, width, height, hp, damage):
         super().__init__()
 
         self.width = width
         self.height = height
-        self.player = player
         self.name = name
         self.image = pygame.image.load(f'din/{name}r.png').convert_alpha()
         self.image = pygame.transform.scale(
@@ -21,6 +19,13 @@ class Enemy(pygame.sprite.Sprite):
         self.damage = damage
         self.is_attacking = True
         self.direction = 0
+
+        #   BINDER
+        self.isMoving = False
+        self.canPathfind = True
+        self.pellets = []
+        self.speedX = 0
+        self.speedY = 0
 
     def draw(self):
         # load player image
@@ -35,12 +40,6 @@ class Enemy(pygame.sprite.Sprite):
 
         elif self.direction == 1:
             self.image = player_left
-
-        elif self.direction == 2:
-            self.image = player_left
-
-        elif self.direction == 3:
-            self.image = player_right
 
         self.image = pygame.transform.scale(
             self.image, (self.width, self.height))
@@ -72,21 +71,71 @@ class Enemy(pygame.sprite.Sprite):
         if keys[pygame.K_x]:  # TODO: change to a timer
             self.is_attacking = not self.is_attacking
 
-    def move(self):
-        pass
+    def findPath(self, x, y, dX, dY, level):
+        if not self.canPathfind:
+            return
+
+        if level[x][y] == 1:
+            return False
+        for i in self.pellets:
+            if (i == [x * 64, y * 64]):
+                return False
+
+        self.pellets.append([x * 64, y * 64])
+
+        if x == dX and y == dY:
+            self.canPathfind = False
+            self.dX = dX * 64
+            self.dY = dY * 64
+            return True
+        
+        if self.findPath(x + 1, y, dX, dY, level):
+            return True
+        if self.findPath(x - 1, y, dX, dY, level):
+            return True
+        if self.findPath(x, y + 1, dX, dY, level):
+            return True
+        if self.findPath(x, y - 1, dX, dY, level):
+            return True
+
+        self.pellets.pop()
+        return False
+
+    def move(self, level, player):
+        if self.isMoving:
+            self.rect.x += self.speedX
+            self.rect.y += self.speedY
+            if (self.rect.x == self.pellets[0][1] and self.rect.y == self.pellets[0][0]):
+                self.pellets.pop(0)
+                self.isMoving = False
+            return
+
+        try:
+            self.canPathfind = True
+            self.speedX = (self.pellets[0][1] - self.rect.x) / 4
+            self.speedY = (self.pellets[0][0] - self.rect.y) / 4
+            self.isMoving = True
+        except:
+            print(self.dX, self.dY)
 
     def kill(self):
         super().kill()
         print(f'{self.name} is dead.')
 
-    def update(self):
+    def update(self, level ,player):
         if not self.is_alive():
             self.kill()
             return
 
         if self.is_attacking:
-            self.attack(self.player, self.damage)
+            self.attack(player, self.damage)
         else:
             self.take_damage(self.damage)
+
+        self.findPath(int(self.rect.x / 64), int(self.rect.y / 64), player.coX, player.coY, level)
+        self.move(level, player)
         self.switch_attack_mode()
+        for i in self.pellets:
+            screen = pygame.display.get_surface()
+            pygame.draw.rect(screen, (0,255,0), pygame.Rect(i[1] + 16, i[0] + 16, 16, 16))
         self.draw()
