@@ -1,11 +1,11 @@
 import pygame
-from entity import Entity
+from actor import Actor
 from settings import FPS
 
 font = pygame.font.SysFont('freesansbold.ttf', 24)
 
 
-class Enemy(Entity):
+class Enemy(Actor):
     def __init__(self, name, x, y, width, height, hp):
         super().__init__(x, y, width, height, hp, name)
 
@@ -16,9 +16,9 @@ class Enemy(Entity):
     def draw(self):
         # load player image
         enemy_right = pygame.image.load(
-            f'din/{self.name}r.png').convert_alpha()
+            f'sprites/{self.name}r.png').convert_alpha()
         enemy_left = pygame.image.load(
-            f'din/{self.name}l.png').convert_alpha()  # left
+            f'sprites/{self.name}l.png').convert_alpha()  # left
         # 0 - RIGHT, 1 - LEFT, 2 - UP, 3 - DOWN
 
         if self.direction == 0:
@@ -48,7 +48,7 @@ class Enemy(Entity):
 
     def timer(self):
         self.time += 1
-        if self.time == self.timeout_seconds * FPS:
+        if self.time >= self.timeout_seconds * FPS:
             self.switch_attack_mode()
             self.time = 0
         
@@ -58,6 +58,8 @@ class Enemy(Entity):
     def update(self):
         if not self.is_alive():
             self.kill()
+            self.time = self.timeout_seconds*FPS # set to max
+            self.timer() # reset to not attacking before dying
             return
 
         if not self.is_attacking:

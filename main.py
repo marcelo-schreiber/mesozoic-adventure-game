@@ -19,7 +19,9 @@ collide_tiles, noncollide_tiles, powerup_tiles = draw_board(arrayMap)
 
 enemy_group = pygame.sprite.Group()
 enemy_1 = Enemy('eoraptor', 128, 128, TILE_SIZE, TILE_SIZE, 100)
+enemy_2 = Enemy('ptedoaustro', 256, 256, TILE_SIZE, TILE_SIZE, 100)
 enemy_group.add(enemy_1)
+enemy_group.add(enemy_2)
 
 player_group = pygame.sprite.GroupSingle()
 player = Player(64, 64, TILE_SIZE, TILE_SIZE, collide_tiles,

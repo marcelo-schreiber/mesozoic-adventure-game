@@ -1,14 +1,14 @@
 import pygame
 
 
-class Entity(pygame.sprite.Sprite):
+class Actor(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, hp, name):
         super().__init__()
         self.width = width
         self.height = height
         self.hp = hp
         self.direction = 0
-        self.image = pygame.image.load(f'din/{name}r.png').convert_alpha()
+        self.image = pygame.image.load(f'sprites/{name}r.png').convert_alpha()
         self.image = pygame.transform.scale(
             self.image, (self.width, self.height))
 

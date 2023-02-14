@@ -1,10 +1,10 @@
 import pygame
-from entity import Entity
+from actor import Actor
 from drawboard import NonCollideTiles
 from settings import TILE_SIZE, PLAYER_HP, PLAYER_NAME
 
 
-class Player(Entity):
+class Player(Actor):
     def __init__(self, x, y, width, height, collide_tiles, poweup_tiles, noncollide_tiles, enemy_group):
         super().__init__(x, y, width, height, PLAYER_HP, PLAYER_NAME)
         self.enemy_group = enemy_group
@@ -60,9 +60,9 @@ class Player(Entity):
 
         # load player image
         player_left = pygame.image.load(
-            'din/bluel.png').convert_alpha()  # left
+            'sprites/bluel.png').convert_alpha()  # left
         player_right = pygame.image.load(
-            'din/bluer.png').convert_alpha()  # right
+            'sprites/bluer.png').convert_alpha()  # right
 
         # 0 - RIGHT, 1 - LEFT, 2 - UP, 3 - DOWN
         if self.direction == 0:
