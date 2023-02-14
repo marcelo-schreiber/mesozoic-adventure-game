@@ -4,6 +4,7 @@ from drawboard import draw_board
 from player import Player
 from mainmenu import cutscene
 from enemy import Enemy
+from settings import TILE_SIZE
 
 pygame.init()
 
@@ -17,11 +18,11 @@ pygame.display.set_caption('Blue\'s Adventure in the Mesozoic Era')
 collide_tiles, noncollide_tiles, powerup_tiles = draw_board(arrayMap)
 
 enemy_group = pygame.sprite.Group()
-enemy_1 = Enemy('eoraptor', 128, 128, 64, 64, 100)
+enemy_1 = Enemy('eoraptor', 128, 128, TILE_SIZE, TILE_SIZE, 100)
 enemy_group.add(enemy_1)
 
 player_group = pygame.sprite.GroupSingle()
-player = Player(64, 64, 64, 64, collide_tiles,
+player = Player(64, 64, TILE_SIZE, TILE_SIZE, collide_tiles,
                 powerup_tiles, noncollide_tiles, enemy_group)
 player_group.add(player)
 
