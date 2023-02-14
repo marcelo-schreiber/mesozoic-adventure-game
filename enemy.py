@@ -11,7 +11,7 @@ class Enemy(Entity):
 
         self.is_attacking = True
         self.time = 0
-        self.timeout_seconds = 5
+        self.timeout_seconds = 5 # 5 SECONDS
 
     def draw(self):
         # load player image
