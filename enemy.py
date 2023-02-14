@@ -58,8 +58,6 @@ class Enemy(Actor):
     def update(self):
         if not self.is_alive():
             self.kill()
-            self.time = self.timeout_seconds*FPS # set to max
-            self.timer() # reset to not attacking before dying
             return
 
         if not self.is_attacking:
