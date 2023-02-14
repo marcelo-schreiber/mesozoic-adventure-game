@@ -1,7 +1,7 @@
 import pygame
 from entity import Entity
 from drawboard import NonCollideTiles
-
+from settings import TILE_SIZE
 hp = 100
 name = 'blue'
 
@@ -15,10 +15,10 @@ class Player(Entity):
         self.noncollide_tiles = noncollide_tiles
 
         self.damage = 5
-        self.player_speed = 8
+        self.player_speed = 8 # has to be a divisor of TILE_SIZE
 
     def can_move(self):
-        return self.rect.x % 64 == 0 and self.rect.y % 64 == 0
+        return self.rect.x % TILE_SIZE == 0 and self.rect.y % TILE_SIZE == 0
 
     def collide_powerup(self):
         powerup_list = pygame.sprite.spritecollide(
@@ -28,7 +28,7 @@ class Player(Entity):
             if powerup.type_of_powerup == 'attack':
                 # substitute with noncollide tile
                 self.noncollide_tiles.add(NonCollideTiles(
-                    powerup.rect.x, powerup.rect.y, 64, 64, 'white')
+                    powerup.rect.x, powerup.rect.y, TILE_SIZE, TILE_SIZE, 'white')
                 )
 
                 for enemy in self.enemy_group:
