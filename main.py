@@ -2,10 +2,12 @@ import pygame
 from settings import arrayMap, WIDTH, HEIGHT, FPS
 from drawboard import draw_board
 from player import Player
-from mainmenu import cutscene
 from enemy import Enemy
 from settings import TILE_SIZE
 
+from mainmenu import cutscene
+from thefall import cutscene as cutscene2
+from theportal import cutscene as cutscene3
 pygame.init()
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -31,6 +33,8 @@ player_group.add(player)
 
 def main():
     cutscene(screen)
+    cutscene2(screen)
+    cutscene3(screen)
 
     running = True
 

@@ -3,7 +3,6 @@ from actor import Actor
 from drawboard import NonCollideTiles
 from settings import TILE_SIZE, PLAYER_HP, PLAYER_NAME
 
-
 class Player(Actor):
     def __init__(self, x, y, width, height, collide_tiles, poweup_tiles, noncollide_tiles, enemy_group):
         super().__init__(x, y, width, height, PLAYER_HP, PLAYER_NAME)

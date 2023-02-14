@@ -2,8 +2,9 @@ import pygame
 from actor import Actor
 from settings import FPS
 
-font = pygame.font.SysFont('freesansbold.ttf', 24)
+pygame.init()
 
+font = pygame.font.SysFont('Roboto', 24)
 
 class Enemy(Actor):
     def __init__(self, name, x, y, width, height, hp):
