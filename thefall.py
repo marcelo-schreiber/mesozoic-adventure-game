@@ -2,6 +2,10 @@ import pygame
 from settings import WIDTH, HEIGHT, FPS
 from mainmenu import calculate_position
 
+
+pygame.mixer.init()
+pygame.mixer.music.load('sounds/waa.mp3')
+pygame.mixer.music.set_volume(0.2)
 font = pygame.font.SysFont('Roboto', 36)
 
 blue = pygame.image.load('sprites/bluer.png')
@@ -44,7 +48,9 @@ def draw(screen):
     if blue_rect.x < WIDTH/2 + 100:
         blue_rect.x += 5
     else:
-        blue_rect.y += 16
+        #Play the music
+        pygame.mixer.music.play()
+        blue_rect.y += 12
         blue = pygame.transform.rotate(blue, -7)
     
     if blue_rect.y > HEIGHT:
