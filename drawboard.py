@@ -1,4 +1,5 @@
 import pygame
+from settings import TILE_SIZE
 
 
 class CollideTile(pygame.sprite.Sprite):
@@ -39,7 +40,6 @@ def draw_board(level):
     collide_tiles = pygame.sprite.Group()
     noncollide_tiles = pygame.sprite.Group()
     powerup_tiles = pygame.sprite.Group()
-    TILE_SIZE = 64
     # loop through level array
     for row in range(len(level)):
         for col in range(len(level[row])):

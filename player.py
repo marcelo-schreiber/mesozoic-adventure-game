@@ -33,7 +33,7 @@ class Player(Entity):
 
                 for enemy in self.enemy_group:
                     enemy.switch_attack_mode()
-                # powerup.kill()
+                powerup.kill()
 
     def take_damage(self, damage):
         self.hp -= damage
