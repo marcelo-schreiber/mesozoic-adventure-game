@@ -1,5 +1,6 @@
 import pygame
 from entity import Entity
+from settings import FPS
 
 font = pygame.font.SysFont('freesansbold.ttf', 24)
 
@@ -9,6 +10,8 @@ class Enemy(Entity):
         super().__init__(x, y, width, height, hp, name)
 
         self.is_attacking = True
+        self.time = 0
+        self.timeout_seconds = 5
 
     def draw(self):
         # load player image
@@ -43,6 +46,12 @@ class Enemy(Entity):
     def take_damage(self, damage):
         self.hp -= damage
 
+    def timer(self):
+        self.time += 1
+        if self.time == self.timeout_seconds * FPS:
+            self.switch_attack_mode()
+            self.time = 0
+        
     def switch_attack_mode(self):
         self.is_attacking = not self.is_attacking
 
@@ -50,4 +59,8 @@ class Enemy(Entity):
         if not self.is_alive():
             self.kill()
             return
+
+        if not self.is_attacking:
+            self.timer()
         self.draw()
+        

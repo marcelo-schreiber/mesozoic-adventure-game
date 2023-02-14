@@ -14,7 +14,7 @@ class Player(Entity):
 
         self.damage = 5
         self.player_speed = 8 # has to be a divisor of TILE_SIZE
-
+        
     def can_move(self):
         return self.rect.x % TILE_SIZE == 0 and self.rect.y % TILE_SIZE == 0
 
