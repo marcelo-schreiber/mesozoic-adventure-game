@@ -1,11 +1,10 @@
 import pygame
 from actor import Actor
-from drawboard import NonCollideTiles
 from settings import TILE_SIZE, PLAYER_HP, PLAYER_NAME
 
 class Player(Actor):
-    def __init__(self, x, y, width, height, collide_tiles, poweup_tiles, noncollide_tiles, enemy_group):
-        super().__init__(x, y, width, height, PLAYER_HP, PLAYER_NAME)
+    def __init__(self, x, y, size, collide_tiles, poweup_tiles, noncollide_tiles, enemy_group):
+        super().__init__(x, y, size, size, PLAYER_HP, PLAYER_NAME)
         self.enemy_group = enemy_group
         self.collide_tiles = collide_tiles
         self.powerup_tiles = poweup_tiles

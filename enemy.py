@@ -7,8 +7,8 @@ pygame.init()
 font = pygame.font.SysFont('Roboto', 24)
 
 class Enemy(Actor):
-    def __init__(self, name, x, y, width, height, hp):
-        super().__init__(x, y, width, height, hp, name)
+    def __init__(self, name, x, y, size, hp):
+        super().__init__(x, y, size, size, hp, name)
 
         self.is_attacking = True
         self.time = 0
