@@ -5,19 +5,21 @@ from player import Player
 from enemy import Enemy
 from settings import TILE_SIZE
 
-from mainmenu import cutscene
+from mainmenu import cutscene, calculate_position
 from thefall import cutscene as cutscene2
 from theportal import cutscene as cutscene3
 pygame.init()
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 timer = pygame.time.Clock()
-
+font = pygame.font.SysFont('Roboto', 42)
 # set caption
 pygame.display.set_caption('Blue\'s Adventure in the Mesozoic Era')
 
 # sprite groups
-collide_tiles, noncollide_tiles, powerup_tiles, enemy_group, player_group, player = draw_board(arrayMap)
+collide_tiles, noncollide_tiles, powerup_tiles, enemy_group, player_group, player = draw_board(
+    arrayMap)
+
 
 def main():
     cutscene(screen)
@@ -25,11 +27,22 @@ def main():
     cutscene3(screen)
 
     running = True
-
+    is_paused = False
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    is_paused = not is_paused
+
+        if is_paused:
+            # draw the pause screen
+            screen.blit(font.render('Paused', True, 'red'),
+                        calculate_position('Paused', WIDTH / 2, HEIGHT / 2))
+            pygame.display.update()
+            timer.tick(FPS)
+            continue
 
         screen.fill('black')
 
