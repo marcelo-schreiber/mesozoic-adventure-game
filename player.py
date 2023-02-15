@@ -72,11 +72,6 @@ class Player(Actor):
         elif self.direction == 1:
             self.image = player_left
 
-        elif self.direction == 2:
-            self.image = player_left
-
-        elif self.direction == 3:
-            self.image = player_right
 
         self.image = pygame.transform.scale(
             self.image, (self.width, self.height))

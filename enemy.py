@@ -33,12 +33,6 @@ class Enemy(Actor):
         elif self.direction == 1:
             self.image = enemy_left
 
-        elif self.direction == 2:
-            self.image = enemy_left
-
-        elif self.direction == 3:
-            self.image = enemy_right
-
         self.image = pygame.transform.scale(
             self.image, (self.width, self.height))
 
@@ -92,6 +86,14 @@ class Enemy(Actor):
     def move(self):
         if not self.isMoving:
             return
+
+        
+        # detect direction with speedx and speedy
+        if self.speedX > 0:
+            self.direction = 0
+        elif self.speedX < 0:
+            self.direction = 1
+
 
         self.rect.x += self.speedX
         self.rect.y += self.speedY
