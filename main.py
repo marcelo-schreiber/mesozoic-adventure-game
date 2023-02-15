@@ -20,8 +20,8 @@ pygame.display.set_caption('Blue\'s Adventure in the Mesozoic Era')
 collide_tiles, noncollide_tiles, powerup_tiles = draw_board(arrayMap)
 
 enemy_group = pygame.sprite.Group()
-enemy_1 = Enemy('eoraptor', 2 * TILE_SIZE, 2 * TILE_SIZE, TILE_SIZE, TILE_SIZE, 100)
-enemy_2 = Enemy('ptedoaustro', 4 * TILE_SIZE, 4 * TILE_SIZE, TILE_SIZE, TILE_SIZE, 100)
+enemy_1 = Enemy('eoraptor', 9 * TILE_SIZE, 1 * TILE_SIZE, TILE_SIZE, TILE_SIZE, 100)
+enemy_2 = Enemy('ptedoaustro', 4 * TILE_SIZE, 5 * TILE_SIZE, TILE_SIZE, TILE_SIZE, 100)
 enemy_group.add(enemy_1)
 enemy_group.add(enemy_2)
 
@@ -53,7 +53,7 @@ def main():
         player_group.update()
 
         enemy_group.draw(screen)
-        enemy_group.update()
+        enemy_group.update(player, arrayMap)
 
         timer.tick(FPS)
         pygame.display.update()  # update the display

@@ -1,6 +1,6 @@
 import pygame
 from actor import Actor
-from settings import FPS
+from settings import FPS, TILE_SIZE
 
 pygame.init()
 
@@ -13,6 +13,11 @@ class Enemy(Actor):
         self.is_attacking = True
         self.time = 0
         self.timeout_seconds = 5 # 5 SECONDS
+
+        #   BINDER
+        self.isMoving = False
+        self.speedX, self.speedY = 0,0
+        self.pellets = []
 
     def draw(self):
         # load player image
@@ -56,12 +61,75 @@ class Enemy(Actor):
     def switch_attack_mode(self):
         self.is_attacking = not self.is_attacking
 
-    def update(self):
+    # Encontra um caminho até o player através de backtracking.
+    def findpath(self, x, y, dX, dY, level):
+        if level[x][y] == 1:
+            return False
+
+        for i in self.pellets:
+            if i == [x * TILE_SIZE, y * TILE_SIZE]:
+                return False
+        
+        self.pellets.append([x * TILE_SIZE, y * TILE_SIZE])
+
+        if x == dX and y == dY:
+            return True
+
+        if self.findpath(x + 1, y, dX, dY, level):
+            return True
+        if self.findpath(x, y + 1, dX, dY, level):
+            return True
+        if self.findpath(x - 1, y, dX, dY, level):
+            return True
+        if self.findpath(x, y - 1, dX, dY, level):
+            return True
+        
+        self.pellets.pop()
+        return False
+
+    # Anda em direção ao próximo nodo até estar na mesma posição.
+    # Ao chegar, retira o nodo da lista e permite o cálculo do próximo nodo.
+    def move(self):
+        if not self.isMoving:
+            return
+
+        self.rect.x += self.speedX
+        self.rect.y += self.speedY
+
+        if self.rect.x == self.pellets[0][1] and self.rect.y == self.pellets[0][0]:
+            self.isMoving = False
+            self.pellets.pop(0)
+
+    # Calcula o próximo nodo ao qual se locomover.
+    # Se não houver mais nodos, recalcula-se o caminho até o player
+    def next_pellet(self, player, level):
+        if self.isMoving:
+            return
+        try:
+            self.speedX = (self.pellets[0][1] - self.rect.x) // 8
+            self.speedY = (self.pellets[0][0] - self.rect.y) // 8
+            self.isMoving = True
+        except:
+            pY = player.rect.y // TILE_SIZE
+            pX = player.rect.x // TILE_SIZE
+            cY = self.rect.y // TILE_SIZE
+            cX = self.rect.x // TILE_SIZE
+            self.findpath(cY, cX, pY, pX, level)
+
+    def update(self, player, level):
         if not self.is_alive():
             self.kill()
             return
 
         if not self.is_attacking:
             self.timer()
+
+        self.next_pellet(player, level)
+        self.move()
+
+        # for i in self.pellets:
+        #     screen = pygame.display.get_surface()
+        #     pygame.draw.rect(screen, (255,0,0), pygame.Rect(i[1] + 16, i[0] + 16, 16, 16))
+
         self.draw()
         
