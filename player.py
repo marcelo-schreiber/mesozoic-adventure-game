@@ -13,6 +13,9 @@ class Player(Actor):
 
         self.damage = 5
         self.player_speed = 8 # has to be a divisor of TILE_SIZE
+
+        #   BINDER :)
+        self.points = 0
         
     def can_move(self):
         return self.rect.x % TILE_SIZE == 0 and self.rect.y % TILE_SIZE == 0
@@ -22,15 +25,14 @@ class Player(Actor):
             self, self.powerup_tiles, True)
 
         for powerup in powerup_list:
-            if powerup.type_of_powerup == 'attack':
-                # substitute with noncollide tile
-                self.noncollide_tiles.add(NonCollideTiles(
-                    powerup.rect.x, powerup.rect.y, TILE_SIZE, TILE_SIZE, 'white')
-                )
-
+            if powerup.type_of_powerup == 'invinc':
                 for enemy in self.enemy_group:
                     enemy.switch_attack_mode()
                 powerup.kill()
+            elif powerup.type_of_powerup == 'scooby_snack':
+                self.points += 10
+                powerup.kill()
+
 
     def take_damage(self, damage):
         self.hp -= damage
