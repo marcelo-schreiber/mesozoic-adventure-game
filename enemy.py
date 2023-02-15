@@ -7,7 +7,7 @@ pygame.init()
 font = pygame.font.SysFont('Roboto', 24)
 
 class Enemy(Actor):
-    def __init__(self, name, x, y, size, hp):
+    def __init__(self, name, x, y, size, hp, hor, ver):
         super().__init__(x, y, size, size, hp, name)
 
         self.is_attacking = True
@@ -18,6 +18,7 @@ class Enemy(Actor):
         self.isMoving = False
         self.speedX, self.speedY = 0,0
         self.pellets = []
+        self.hor, self.ver = hor, ver
 
     def draw(self):
         # load player image
@@ -55,7 +56,6 @@ class Enemy(Actor):
     def switch_attack_mode(self):
         self.is_attacking = not self.is_attacking
 
-    # Encontra um caminho até o player através de backtracking.
     def findpath(self, x, y, dX, dY, level):
         if level[x][y] == 1:
             return False
@@ -69,13 +69,13 @@ class Enemy(Actor):
         if x == dX and y == dY:
             return True
 
-        if self.findpath(x + 1, y, dX, dY, level):
+        if self.findpath(x - self.hor, y, dX, dY, level):
             return True
-        if self.findpath(x, y + 1, dX, dY, level):
+        if self.findpath(x, y + self.ver, dX, dY, level):
             return True
-        if self.findpath(x - 1, y, dX, dY, level):
+        if self.findpath(x + self.hor, y, dX, dY, level):
             return True
-        if self.findpath(x, y - 1, dX, dY, level):
+        if self.findpath(x, y - self.ver, dX, dY, level):
             return True
         
         self.pellets.pop()
@@ -86,14 +86,12 @@ class Enemy(Actor):
     def move(self):
         if not self.isMoving:
             return
-
-        
+     
         # detect direction with speedx and speedy
         if self.speedX > 0:
             self.direction = 0
         elif self.speedX < 0:
             self.direction = 1
-
 
         self.rect.x += self.speedX
         self.rect.y += self.speedY
@@ -119,7 +117,7 @@ class Enemy(Actor):
             self.findpath(cY, cX, pY, pX, level)
 
     def update(self, player, level):
-        if not self.is_alive():
+        if not super().is_alive():
             self.kill()
             return
 
@@ -129,9 +127,4 @@ class Enemy(Actor):
         self.next_pellet(player, level)
         self.move()
 
-        # for i in self.pellets:
-        #     screen = pygame.display.get_surface()
-        #     pygame.draw.rect(screen, (255,0,0), pygame.Rect(i[1] + 16, i[0] + 16, 16, 16))
-
         self.draw()
-        

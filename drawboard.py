@@ -9,6 +9,8 @@ INVINCIBLE = 2
 ZAWARUDO = 3
 PLAYER = 4
 EORAPTOR = 5
+YIQI = 6
+PTEDOAUSTRO = 7
 
 class CollideTile(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, color):
@@ -65,7 +67,11 @@ def draw_board(level):
                 powerup_tiles.add(PowerUpTile(
                     col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, 'blue', 'invinc'))
             elif level[row][col] == EORAPTOR:
-                enemy_group.add(Enemy("eoraptor", col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, 1))
+                enemy_group.add(Enemy('eoraptor', col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, 1, 1, 1))
+            elif level[row][col] == YIQI:
+                enemy_group.add(Enemy('yi qi', col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, 1, 1, -1))
+            elif level[row][col] == PTEDOAUSTRO:
+                enemy_group.add(Enemy('ptedoaustro', col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, 1, -1, -1))
             elif level[row][col] == PLAYER:
                 player = Player(
                     col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, collide_tiles, powerup_tiles, noncollide_tiles, enemy_group)
