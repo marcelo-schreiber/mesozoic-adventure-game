@@ -28,7 +28,7 @@ class Player(Actor):
                 for enemy in self.enemy_group:
                     enemy.switch_attack_mode()
                 powerup.kill()
-            elif powerup.type_of_powerup == 'scooby_snack':
+            elif powerup.type_of_powerup == 'scooby':
                 self.points += 10
                 powerup.kill()
 

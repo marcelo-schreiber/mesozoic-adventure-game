@@ -23,15 +23,14 @@ class CollideTile(pygame.sprite.Sprite):
 
 
 class PowerUpTile(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, color, type):
+    def __init__(self, x, y, width, height, type):
         super().__init__()
-        self.image = pygame.Surface([width, height])
-        self.image.fill(color)
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
         self.type_of_powerup = type
+        self.image = pygame.image.load(f'sprites/{self.type_of_powerup}.png').convert_alpha()
+        self.image = pygame.transform.scale(
+            self.image, (width, height))
 
+        self.rect = self.image.get_rect(topleft=(x, y))
 
 class NonCollideTiles(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, color):
@@ -62,10 +61,10 @@ def draw_board(level):
                 continue
             elif level[row][col] == PATH:
                 powerup_tiles.add(PowerUpTile(
-                    col * TILE_SIZE + TILE_SIZE/4, row * TILE_SIZE + TILE_SIZE/4, TILE_SIZE/2, TILE_SIZE/2, 'green', 'scooby_snack'))
+                    col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, 'scooby'))
             elif level[row][col] == INVINCIBLE:
                 powerup_tiles.add(PowerUpTile(
-                    col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, 'blue', 'invinc'))
+                    col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, 'invinc'))
             elif level[row][col] == EORAPTOR:
                 enemy_group.add(Enemy('eoraptor', col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, 1, 1, 1))
             elif level[row][col] == YIQI:
