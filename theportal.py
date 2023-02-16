@@ -1,22 +1,18 @@
 import pygame
-from settings import WIDTH, HEIGHT, FPS
+from settings import WIDTH, HEIGHT, FPS, font
 from mainmenu import calculate_position
-
-font = pygame.font.SysFont('Roboto', 36)
 
 portal = pygame.image.load('sprites/portal.png')
 portal = pygame.transform.scale(
-            portal, (WIDTH, 2*HEIGHT))
+    portal, (WIDTH, 2*HEIGHT))
 
 portal_rect = portal.get_rect()
 portal_rect.y = -HEIGHT
-portal_rect.x = 0 
+portal_rect.x = 0
 
-def calculate_position(text, x, y):
-    text_width, text_height = font.size(text)
-    return (x - text_width / 2, y - text_height / 2)
 
 running = True
+
 
 def draw(screen):
     global portal
@@ -39,6 +35,7 @@ def draw(screen):
     else:
         portal_rect.y += 16
         portal = pygame.transform.rotate(portal, 7)
+
 
 def cutscene(screen):
     global running

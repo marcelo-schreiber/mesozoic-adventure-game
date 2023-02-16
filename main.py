@@ -3,20 +3,18 @@ from settings import arrayMaps, WIDTH, HEIGHT, FPS
 from drawboard import draw_board
 from player import Player
 from enemy import Enemy
-from settings import TILE_SIZE
+from settings import TILE_SIZE, font
 
 from mainmenu import cutscene, calculate_position
 from thefall import cutscene as cutscene2
 from theportal import cutscene as cutscene3
-pygame.init()
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 timer = pygame.time.Clock()
-font = pygame.font.SysFont('Roboto', 42)
+
 # set caption
 pygame.display.set_caption('Blue\'s Adventure in the Mesozoic Era')
 
-# sprite groups
 
 def main():
     cutscene(screen)
@@ -27,7 +25,10 @@ def main():
     is_paused = False
     current_level = 0
     while current_level < len(arrayMaps):
-        collide_tiles, noncollide_tiles, powerup_tiles, enemy_group, player_group, player = draw_board(arrayMaps[current_level])
+
+        collide_tiles, noncollide_tiles, powerup_tiles, enemy_group, player_group, player = draw_board(
+            arrayMaps[current_level])
+
         running = True
         while running:
             if len(enemy_group) == 0 or len(powerup_tiles) == 0:
