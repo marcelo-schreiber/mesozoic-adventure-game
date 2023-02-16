@@ -7,7 +7,7 @@ from settings import TILE_SIZE, font
 
 from mainmenu import cutscene, calculate_position
 from thefall import Cutscene as cutscene2
-from theportal import cutscene as cutscene3
+from theportal import Cutscene as cutscene3
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 timer = pygame.time.Clock()
@@ -19,7 +19,7 @@ pygame.display.set_caption('Blue\'s Adventure in the Mesozoic Era')
 def main():
     cutscene(screen)
     cutscene2(screen).play()
-    cutscene3(screen)
+    cutscene3(screen).play()
 
     running = True
     is_paused = False
