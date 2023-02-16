@@ -26,7 +26,8 @@ class Player(Actor):
         for powerup in powerup_list:
             if powerup.type_of_powerup == 'invinc':
                 for enemy in self.enemy_group:
-                    enemy.switch_attack_mode()
+                    enemy.is_attacking = False
+                    enemy.time = 0
                 powerup.kill()
             elif powerup.type_of_powerup == 'scooby':
                 self.points += 10
