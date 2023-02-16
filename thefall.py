@@ -27,11 +27,6 @@ other_ground_rect.x = WIDTH/2 + 164
 ground_rect.y = HEIGHT - blue_rect.y + 64
 
 
-def calculate_position(text, x, y):
-    text_width, text_height = font.size(text)
-    return (x - text_width / 2, y - text_height / 2)
-
-
 running = True
 
 

@@ -11,11 +11,6 @@ portal_rect.y = -HEIGHT
 portal_rect.x = 0
 
 
-def calculate_position(text, x, y):
-    text_width, text_height = font.size(text)
-    return (x - text_width / 2, y - text_height / 2)
-
-
 running = True
 
 
