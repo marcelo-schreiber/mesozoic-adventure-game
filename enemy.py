@@ -50,11 +50,8 @@ class Enemy(Actor):
     def timer(self):
         self.time += 1
         if self.time >= self.timeout_seconds * FPS:
-            self.switch_attack_mode()
+            self.is_attacking = True
             self.time = 0
-        
-    def switch_attack_mode(self):
-        self.is_attacking = not self.is_attacking
 
     def findpath(self, x, y, dX, dY, level):
         if level[x][y] == 1:
