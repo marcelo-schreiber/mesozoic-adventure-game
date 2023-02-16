@@ -25,14 +25,16 @@ def main():
     is_paused = False
     current_level = 0
     while current_level < len(arrayMaps):
+
         collide_tiles, noncollide_tiles, powerup_tiles, enemy_group, player_group, player = draw_board(
             arrayMaps[current_level])
+
         running = True
         while running:
             if len(enemy_group) == 0 or len(powerup_tiles) == 0:
                 print("venceu")
                 current_level += 1
-                running = False
+                break
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()

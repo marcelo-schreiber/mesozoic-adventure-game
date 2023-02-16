@@ -10,11 +10,15 @@ def calculate_position(text, x, y):
 def draw(screen):
     text_1 = 'Blue\'s Adventure in the Mesozoic Era'
     text_2 = 'Press any key to start...'
+    text_3 = 'Team One Games\' first project.'
+    
     screen.fill('black')
     screen.blit(font.render(text_1, True, 'white'),
                 calculate_position(text_1, WIDTH / 2, HEIGHT / 2 - 300))
     screen.blit(font.render(text_2, True,
                 'white'),  calculate_position(text_2, WIDTH / 2, HEIGHT / 2 - 150))
+    screen.blit(font.render(text_3, True,
+                'white'),  calculate_position(text_3, WIDTH / 2, HEIGHT / 2))
 
 
 def cutscene(screen):
