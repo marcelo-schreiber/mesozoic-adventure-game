@@ -18,6 +18,7 @@ pygame.display.set_caption('Blue\'s Adventure in the Mesozoic Era')
 
 # sprite groups
 
+
 def main():
     cutscene(screen)
     cutscene2(screen)
@@ -26,8 +27,9 @@ def main():
     running = True
     is_paused = False
     current_level = 0
-    while current_level < len(arrayMaps) - 1:
-        collide_tiles, noncollide_tiles, powerup_tiles, enemy_group, player_group, player = draw_board(arrayMaps[current_level])
+    while current_level < len(arrayMaps):
+        collide_tiles, noncollide_tiles, powerup_tiles, enemy_group, player_group, player = draw_board(
+            arrayMaps[current_level])
         running = True
         while running:
             if len(enemy_group) == 0 or len(powerup_tiles) == 0:
