@@ -47,9 +47,9 @@ def draw(screen):
     # move to the right
     if blue_rect.x < WIDTH/2 + 100:
         blue_rect.x += 5
+        pygame.mixer.music.play()
     else:
         #Play the music
-        pygame.mixer.music.play()
         blue_rect.y += 12
         blue = pygame.transform.rotate(blue, -7)
     

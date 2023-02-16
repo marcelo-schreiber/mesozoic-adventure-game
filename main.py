@@ -1,5 +1,5 @@
 import pygame
-from settings import arrayMap, WIDTH, HEIGHT, FPS
+from settings import arrayMaps, WIDTH, HEIGHT, FPS
 from drawboard import draw_board
 from player import Player
 from enemy import Enemy
@@ -17,9 +17,6 @@ font = pygame.font.SysFont('Roboto', 42)
 pygame.display.set_caption('Blue\'s Adventure in the Mesozoic Era')
 
 # sprite groups
-collide_tiles, noncollide_tiles, powerup_tiles, enemy_group, player_group, player = draw_board(
-    arrayMap)
-
 
 def main():
     cutscene(screen)
@@ -28,36 +25,46 @@ def main():
 
     running = True
     is_paused = False
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+    current_level = 0
+    while current_level < len(arrayMaps) - 1:
+        collide_tiles, noncollide_tiles, powerup_tiles, enemy_group, player_group, player = draw_board(arrayMaps[current_level])
+        running = True
+        while running:
+            if len(enemy_group) == 0 or len(powerup_tiles) == 0:
+                print("venceu")
+                current_level += 1
                 running = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    is_paused = not is_paused
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        is_paused = not is_paused
 
-        if is_paused:
-            # draw the pause screen
-            screen.blit(font.render('Paused', True, 'red'),
-                        calculate_position('Paused', WIDTH / 2, HEIGHT / 2))
-            pygame.display.update()
+            if is_paused:
+                # draw the pause screen
+                screen.blit(font.render('Paused', True, 'red'),
+                            calculate_position('Paused', WIDTH / 2, HEIGHT / 2))
+                pygame.display.update()
+                timer.tick(FPS)
+                continue
+
+            screen.fill('black')
+
+            collide_tiles.draw(screen)
+            noncollide_tiles.draw(screen)
+            powerup_tiles.draw(screen)
+
+            player_group.draw(screen)
+            player_group.update()
+            if not player.is_alive():
+                running = False
+
+            enemy_group.draw(screen)
+            enemy_group.update(player, arrayMaps[current_level])
+
             timer.tick(FPS)
-            continue
-
-        screen.fill('black')
-
-        collide_tiles.draw(screen)
-        noncollide_tiles.draw(screen)
-        powerup_tiles.draw(screen)
-
-        player_group.draw(screen)
-        player_group.update()
-
-        enemy_group.draw(screen)
-        enemy_group.update(player, arrayMap)
-
-        timer.tick(FPS)
-        pygame.display.update()  # update the display
+            pygame.display.update()  # update the display
 
     pygame.display.quit()
     pygame.quit()
