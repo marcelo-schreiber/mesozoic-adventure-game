@@ -1,7 +1,6 @@
 import pygame
-from settings import WIDTH, HEIGHT, FPS
+from settings import WIDTH, HEIGHT, FPS, font
 
-font = pygame.font.SysFont('Roboto', 36)
 
 def calculate_position(text, x, y):
     text_width, text_height = font.size(text)

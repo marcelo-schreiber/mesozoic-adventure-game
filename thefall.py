@@ -1,19 +1,18 @@
 import pygame
-from settings import WIDTH, HEIGHT, FPS
+from settings import WIDTH, HEIGHT, FPS, font
 from mainmenu import calculate_position
 
 
 pygame.mixer.init()
 pygame.mixer.music.load('sounds/waa.mp3')
 pygame.mixer.music.set_volume(0.2)
-font = pygame.font.SysFont('Roboto', 36)
 
 blue = pygame.image.load('sprites/bluer.png')
 blue = pygame.transform.scale(
-            blue, (64, 64))
+    blue, (64, 64))
 
 blue_rect = blue.get_rect()
-blue_rect.y = HEIGHT / 2 
+blue_rect.y = HEIGHT / 2
 
 # draw a green rectangle to be the ground
 ground = pygame.Surface((WIDTH/2 + 100, 64))
@@ -32,7 +31,9 @@ def calculate_position(text, x, y):
     text_width, text_height = font.size(text)
     return (x - text_width / 2, y - text_height / 2)
 
+
 running = True
+
 
 def draw(screen):
     global blue
@@ -49,13 +50,13 @@ def draw(screen):
         blue_rect.x += 5
         pygame.mixer.music.play()
     else:
-        #Play the music
+        # Play the music
         blue_rect.y += 12
         blue = pygame.transform.rotate(blue, -7)
-    
+
     if blue_rect.y > HEIGHT:
         running = False
-        
+
 
 def cutscene(screen):
     global running

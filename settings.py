@@ -1,5 +1,7 @@
-# 0 - rgb(255,255,255)
-# 1 - rgb(0,0,0)
+import pygame
+
+pygame.init()
+font = pygame.font.SysFont('Roboto', 42)
 
 FPS = 30
 TILE_SIZE = 64
