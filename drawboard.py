@@ -67,7 +67,7 @@ def draw_board(level):
                     col * TILE_SIZE + (TILE_SIZE/6), row * TILE_SIZE + (TILE_SIZE/6), TILE_SIZE/1.5, TILE_SIZE/1.5, 'scooby'))
             elif level[row][col] == INVINCIBLE:
                 powerup_tiles.add(PowerUpTile(
-                    col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE, 'invinc'))
+                    col * TILE_SIZE + (TILE_SIZE/6), row * TILE_SIZE + (TILE_SIZE/6), TILE_SIZE/1.5, TILE_SIZE/1.5, 'invinc'))
             elif level[row][col] == EORAPTOR:
                 enemy_group.add(Enemy('eoraptor', col * TILE_SIZE,
                                 row * TILE_SIZE, TILE_SIZE, 1, 1, 1))
