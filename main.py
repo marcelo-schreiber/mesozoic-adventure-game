@@ -25,17 +25,17 @@ def main():
 
     running = True
     is_paused = False
-    current_level = 0
-    while current_level < len(arrayMaps):
-
+    current_level_idx = 0
+    while current_level_idx < len(arrayMaps):
+        current_map = arrayMaps[current_level_idx]
         collide_tiles, noncollide_tiles, powerup_tiles, enemy_group, player_group, player = draw_board(
-            arrayMaps[current_level])
+            current_map)
 
         running = True
         while running:
             if len(enemy_group) == 0 or len(powerup_tiles) == 0:
                 print("venceu")
-                current_level += 1
+                current_level_idx += 1
                 break
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -59,12 +59,12 @@ def main():
             powerup_tiles.draw(screen)
 
             player_group.draw(screen)
-            player_group.update(arrayMaps[current_level])
+            player_group.update(current_map)
             if not player.is_alive():
                 running = False
 
             enemy_group.draw(screen)
-            enemy_group.update(player, arrayMaps[current_level])
+            enemy_group.update(player, current_map)
 
             timer.tick(FPS)
             pygame.display.update()  # update the display
