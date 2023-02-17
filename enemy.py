@@ -1,6 +1,7 @@
 import pygame
 from actor import Actor
 from settings import FPS, TILE_SIZE
+import math
 
 pygame.init()
 
@@ -19,6 +20,9 @@ class Enemy(Actor):
         self.speedX, self.speedY = 0,0
         self.pellets = []
         self.hor, self.ver = hor, ver
+
+        self.speedSet = 8
+        self.canHurt = True
 
     def draw(self):
         # load player image
@@ -44,8 +48,33 @@ class Enemy(Actor):
         screen = pygame.display.get_surface()
         screen.blit(text, text_rect)
 
-    def take_damage(self, damage):
-        self.hp -= damage
+    def calculate_distance(self, x1, y1, x2, y2):
+        return math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+
+    def farmost_point(self, noncollide_tiles, x1, y1):
+        maior = 0
+        x, y = 0, 0
+        for i in noncollide_tiles:
+            r = self.calculate_distance(i.rect.x, i.rect.y, x1, y1)
+            if maior < r:
+                maior = r
+                x, y = i.rect.x, i.rect. y
+        return x, y
+
+    def take_damage(self, level, noncollide_tiles, player):
+        if not self.canHurt:
+            return
+
+        self.canHurt = False
+        self.speedSet = 1
+        self.pellets.clear()
+        self.isMoving = False
+        self.rect.x = (self.rect.x // TILE_SIZE) * TILE_SIZE
+        self.rect.y = (self.rect.y // TILE_SIZE) * TILE_SIZE
+        cY = self.rect.y // TILE_SIZE
+        cX = self.rect.x // TILE_SIZE
+        x, y = self.farmost_point(noncollide_tiles, player.rect.x, player.rect.y)
+        self.findpath(cY, cX, y // TILE_SIZE, x // TILE_SIZE, level)
 
     def timer(self):
         self.time += 1
@@ -103,10 +132,12 @@ class Enemy(Actor):
         if self.isMoving:
             return
         try:
-            self.speedX = (self.pellets[0][1] - self.rect.x) // 8
-            self.speedY = (self.pellets[0][0] - self.rect.y) // 8
+            self.speedX = (self.pellets[0][1] - self.rect.x) // self.speedSet
+            self.speedY = (self.pellets[0][0] - self.rect.y) // self.speedSet
             self.isMoving = True
         except:
+            self.speedSet = 8
+            self.canHurt = True
             pY = player.rect.y // TILE_SIZE
             pX = player.rect.x // TILE_SIZE
             cY = self.rect.y // TILE_SIZE
