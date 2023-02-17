@@ -1,7 +1,7 @@
 import pygame
 from actor import Actor
 from settings import FPS, TILE_SIZE, font
-import math
+from math import sqrt
 
 
 class Enemy(Actor):
@@ -46,7 +46,7 @@ class Enemy(Actor):
         screen.blit(text, text_rect)
 
     def calculate_distance(self, x1, y1, x2, y2):
-        return math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+        return sqrt((x2 - x1)**2 + (y2 - y1)**2)
 
     def farmost_point(self, noncollide_tiles, x1, y1):
         maior = 0
