@@ -1,60 +1,54 @@
 import pygame
-from settings import WIDTH, HEIGHT, FPS
+from settings import WIDTH, HEIGHT, FPS, font, TILE_SIZE
 from mainmenu import calculate_position
 
-font = pygame.font.SysFont('Roboto', 36)
 
-portal = pygame.image.load('sprites/portal.png')
-portal = pygame.transform.scale(
-            portal, (WIDTH, 2*HEIGHT))
+class Cutscene():
+    def __init__(self, screen):
+        self.screen = screen
+        self.portal = pygame.image.load('sprites/portal.png')
+        self.portal = pygame.transform.scale(
+            self.portal, (WIDTH, 2*HEIGHT))
+        self.portal_rect = self.portal.get_rect()
+        self.portal_rect.x = 0
+        self.portal_rect.y = -HEIGHT  # start above the screen
+        self.is_running = True
 
-portal_rect = portal.get_rect()
-portal_rect.y = -HEIGHT
-portal_rect.x = 0 
+        self.timer = pygame.time.Clock()
 
-def calculate_position(text, x, y):
-    text_width, text_height = font.size(text)
-    return (x - text_width / 2, y - text_height / 2)
+    def draw_portal(self):
+        self.screen.blit(self.portal, self.portal_rect)
 
-running = True
+    def move_portal(self):
+        if self.portal_rect.y < HEIGHT/2:
+            if self.portal.get_alpha() < 90:
+                self.is_running = False
+            self.portal_rect.y += 5
+            self.portal.set_alpha(self.portal.get_alpha() - 0.4)
 
-def draw(screen):
-    global portal
-    global running
+    def draw_text(self):
+        text_1 = 'It time travelled to the mesozoic era...'
+        self.screen.blit(font.render(text_1, True, 'white'),
+                         calculate_position(text_1, WIDTH / 2, HEIGHT / 2 - 300))
 
-    text_1 = 'It time travelled to the mesozoic era...'
-    screen.fill('black')
+    def draw(self):
+        self.screen.fill('black')
 
-    screen.blit(portal, (portal_rect.x, portal_rect.y))
-    # move to the right
-    screen.blit(font.render(text_1, True, 'white'),
-                calculate_position(text_1, WIDTH / 2, HEIGHT / 2 - 300))
+        self.draw_portal()
+        self.move_portal()
 
-    # make portal wiggle and fade
-    if portal_rect.y < HEIGHT/2:
-        portal_rect.y += 5
-        portal.set_alpha(portal.get_alpha() - 0.35)
-        if portal.get_alpha() < 72:
-            running = False
-    else:
-        portal_rect.y += 16
-        portal = pygame.transform.rotate(portal, 7)
+        self.draw_text()
 
-def cutscene(screen):
-    global running
+    def play(self):
+        while self.is_running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
 
-    timer = pygame.time.Clock()
+                if event.type == pygame.KEYDOWN:
+                    self.is_running = False
 
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            if event.type == pygame.KEYDOWN:
-                running = False
-
-        draw(screen)
-        # change to 20 fps
-        timer.tick(FPS)
-
-        pygame.display.update()  # update the display
+            self.draw()
+            self.timer.tick(FPS)
+            pygame.display.update()  # update the display

@@ -11,7 +11,11 @@ class Player(Actor):
         self.noncollide_tiles = noncollide_tiles
 
         self.damage = 5
+<<<<<<< HEAD
         self.player_speed = TILE_SIZE / 8
+=======
+        self.player_speed = TILE_SIZE // 8
+>>>>>>> 96ddb35767b363727455464a437228dddea732c9
 
         #   BINDER :)
         self.points = 0
@@ -26,7 +30,8 @@ class Player(Actor):
         for powerup in powerup_list:
             if powerup.type_of_powerup == 'invinc':
                 for enemy in self.enemy_group:
-                    enemy.switch_attack_mode()
+                    enemy.is_attacking = False
+                    enemy.time = 0
                 powerup.kill()
             elif powerup.type_of_powerup == 'scooby':
                 self.points += 10
@@ -95,14 +100,17 @@ class Player(Actor):
             else:
                 self.rect.y -= self.player_speed
 
-    def collide_enemy(self):
+    def collide_enemy(self, level):
         enemy_list = pygame.sprite.spritecollide(self, self.enemy_group, True)
 
         for enemy in enemy_list:
+            if enemy.canHurt == False:
+                return
+
             if enemy.is_attacking:
                 self.take_damage(self.damage)
             else:
-                enemy.take_damage(self.damage)
+                enemy.take_damage(level, self.noncollide_tiles, self)
 
     def animate(self):
         if self.direction == 0:
@@ -122,7 +130,7 @@ class Player(Actor):
         pygame.quit()
         quit()
 
-    def update(self):
+    def update(self, level):
         if not self.is_alive():
             self.player_kill()
             return
@@ -133,6 +141,6 @@ class Player(Actor):
             self.animate()
         self.check_collision()
         self.collide_powerup()
-        self.collide_enemy()
+        self.collide_enemy(level)
 
         self.draw()
