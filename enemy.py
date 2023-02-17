@@ -20,20 +20,19 @@ class Enemy(Actor):
 
         self.speedSet = 8
         self.canHurt = True
-
-        self.dinoImage = pygame.image.load(
-            f'sprites/{self.name}.png').convert_alpha()
-        self.frango = pygame.image.load(
-            f'sprites/frango.png').convert_alpha()
+        self.frango = pygame.image.load(f'sprites/chicken.png').convert_alpha()
 
     def draw(self):
         # 0 - RIGHT, 1 - LEFT, 2 - UP, 3 - DOWN
 
-        if self.direction == 0:
-            self.image = pygame.transform.flip(self.imageHolder, False, False)
+        if not self.is_attacking:
+            self.image = self.frango       
+
+        elif self.direction == 0:
+            self.image = self.imageR
 
         elif self.direction == 1:
-            self.image = pygame.transform.flip(self.imageHolder, True, False)
+            self.image = self.imageL
 
         self.image = pygame.transform.scale(
             self.image, (self.width, self.height))
@@ -65,7 +64,6 @@ class Enemy(Actor):
         self.canHurt = False
         self.isMoving = False
         self.is_attacking = True
-        self.imageHolder = self.dinoImage
         self.speedSet = 1
         self.pellets.clear()
         cY, cX = self.rect.y // TILE_SIZE, self.rect.x // TILE_SIZE
@@ -78,7 +76,6 @@ class Enemy(Actor):
         if self.time >= self.timeout_seconds * FPS:
             self.is_attacking = True
             self.time = 0
-            self.imageHolder = self.dinoImage
 
     def findpath(self, x, y, dX, dY, level):
         if level[x][y] == 1:

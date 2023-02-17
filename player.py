@@ -26,7 +26,6 @@ class Player(Actor):
         for powerup in powerup_list:
             if powerup.type_of_powerup == 'invinc':
                 for enemy in self.enemy_group:
-                    enemy.imageHolder = enemy.frango
                     enemy.is_attacking = False
                     enemy.time = 0
                 powerup.kill()
@@ -66,10 +65,10 @@ class Player(Actor):
     def draw(self):
         # 0 - RIGHT, 1 - LEFT, 2 - UP, 3 - DOWN
         if self.direction == 0:
-            self.image = pygame.transform.flip(self.imageHolder, False, False)
+            self.image = self.imageR
 
         elif self.direction == 1:
-            self.image = pygame.transform.flip(self.imageHolder, True, False)
+            self.image = self.imageL
 
 
         self.image = pygame.transform.scale(
