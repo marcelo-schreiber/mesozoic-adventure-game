@@ -1,11 +1,8 @@
 import pygame
 from actor import Actor
-from settings import FPS, TILE_SIZE
-import math
+from settings import FPS, TILE_SIZE, font
+from math import sqrt
 
-pygame.init()
-
-font = pygame.font.SysFont('Roboto', 24)
 
 class Enemy(Actor):
     def __init__(self, name, x, y, size, hp, hor, ver):
@@ -13,11 +10,11 @@ class Enemy(Actor):
 
         self.is_attacking = True
         self.time = 0
-        self.timeout_seconds = 5 # 5 SECONDS
+        self.timeout_seconds = 5  # 5 SECONDS
 
         #   BINDER
         self.isMoving = False
-        self.speedX, self.speedY = 0,0
+        self.speedX, self.speedY = 0, 0
         self.pellets = []
         self.hor, self.ver = hor, ver
 
@@ -49,7 +46,7 @@ class Enemy(Actor):
         screen.blit(text, text_rect)
 
     def calculate_distance(self, x1, y1, x2, y2):
-        return math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+        return sqrt((x2 - x1)**2 + (y2 - y1)**2)
 
     def farmost_point(self, noncollide_tiles, x1, y1):
         maior = 0
@@ -73,7 +70,8 @@ class Enemy(Actor):
         self.rect.y = (self.rect.y // TILE_SIZE) * TILE_SIZE
         cY = self.rect.y // TILE_SIZE
         cX = self.rect.x // TILE_SIZE
-        x, y = self.farmost_point(noncollide_tiles, player.rect.x, player.rect.y)
+        x, y = self.farmost_point(
+            noncollide_tiles, player.rect.x, player.rect.y)
         self.findpath(cY, cX, y // TILE_SIZE, x // TILE_SIZE, level)
 
     def timer(self):
@@ -89,7 +87,7 @@ class Enemy(Actor):
         for i in self.pellets:
             if i == [x * TILE_SIZE, y * TILE_SIZE]:
                 return False
-        
+
         self.pellets.append([x * TILE_SIZE, y * TILE_SIZE])
 
         if x == dX and y == dY:
@@ -103,7 +101,7 @@ class Enemy(Actor):
             return True
         if self.findpath(x, y - self.ver, dX, dY, level):
             return True
-        
+
         self.pellets.pop()
         return False
 
@@ -112,7 +110,7 @@ class Enemy(Actor):
     def move(self):
         if not self.isMoving:
             return
-     
+
         # detect direction with speedx and speedy
         if self.speedX > 0:
             self.direction = 0
