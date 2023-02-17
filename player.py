@@ -11,7 +11,7 @@ class Player(Actor):
         self.noncollide_tiles = noncollide_tiles
 
         self.damage = 5
-        self.player_speed = 8 # has to be a divisor of TILE_SIZE
+        self.player_speed = TILE_SIZE / 8
 
         #   BINDER :)
         self.points = 0
