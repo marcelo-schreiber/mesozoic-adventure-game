@@ -57,7 +57,7 @@ def main():
             powerup_tiles.draw(screen)
 
             player_group.draw(screen)
-            player_group.update()
+            player_group.update(arrayMaps[current_level])
             if not player.is_alive():
                 running = False
 
