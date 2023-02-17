@@ -11,11 +11,7 @@ class Player(Actor):
         self.noncollide_tiles = noncollide_tiles
 
         self.damage = 5
-<<<<<<< HEAD
         self.player_speed = TILE_SIZE / 8
-=======
-        self.player_speed = TILE_SIZE // 8
->>>>>>> 96ddb35767b363727455464a437228dddea732c9
 
         #   BINDER :)
         self.points = 0
