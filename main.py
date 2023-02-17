@@ -5,7 +5,9 @@ from player import Player
 from enemy import Enemy
 from settings import TILE_SIZE, font
 
-from mainmenu import cutscene, calculate_position
+from mainmenu import calculate_position
+
+from mainmenu import MainMenu as cutscene
 from thefall import Cutscene as cutscene2
 from theportal import Cutscene as cutscene3
 
@@ -17,7 +19,7 @@ pygame.display.set_caption('Blue\'s Adventure in the Mesozoic Era')
 
 
 def main():
-    cutscene(screen)
+    cutscene(screen).play()
     cutscene2(screen).play()
     cutscene3(screen).play()
 
