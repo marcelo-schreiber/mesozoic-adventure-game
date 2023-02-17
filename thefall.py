@@ -11,7 +11,7 @@ pygame.mixer.music.set_volume(0.2)
 class Cutscene():
     def __init__(self, screen):
         self.screen = screen
-        self.blue = pygame.image.load('sprites/bluer.png')
+        self.blue = pygame.image.load('sprites/blue.png')
         self.blue = pygame.transform.scale(
             self.blue, (64, 64))
         self.blue_rect = self.blue.get_rect()

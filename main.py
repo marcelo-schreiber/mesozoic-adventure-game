@@ -39,7 +39,7 @@ def main():
                 break
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    current_level = 5
+                    current_level_idx = 5
                     running = False
                     break
                 if event.type == pygame.KEYDOWN:

@@ -21,26 +21,26 @@ class Enemy(Actor):
         self.speedSet = 8
         self.canHurt = True
 
+        self.dinoImage = pygame.image.load(
+            f'sprites/{self.name}.png').convert_alpha()
+        self.frango = pygame.image.load(
+            f'sprites/frango.png').convert_alpha()
+
     def draw(self):
-        # load player image
-        enemy_right = pygame.image.load(
-            f'sprites/{self.name}r.png').convert_alpha()
-        enemy_left = pygame.image.load(
-            f'sprites/{self.name}l.png').convert_alpha()  # left
         # 0 - RIGHT, 1 - LEFT, 2 - UP, 3 - DOWN
 
         if self.direction == 0:
-            self.image = enemy_right
+            self.image = pygame.transform.flip(self.imageHolder, False, False)
 
         elif self.direction == 1:
-            self.image = enemy_left
+            self.image = pygame.transform.flip(self.imageHolder, True, False)
 
         self.image = pygame.transform.scale(
             self.image, (self.width, self.height))
 
         # draw a text above the enemy
         text = font.render(
-            f'{self.name, self.hp, self.is_attacking}', True, 'red')
+            f'{self.is_attacking}', True, 'red')
         text_rect = text.get_rect(center=(self.rect.centerx, self.rect.y - 10))
         screen = pygame.display.get_surface()
         screen.blit(text, text_rect)
@@ -63,13 +63,12 @@ class Enemy(Actor):
             return
 
         self.canHurt = False
+        self.isMoving = False
+        self.is_attacking = True
+        self.imageHolder = self.dinoImage
         self.speedSet = 1
         self.pellets.clear()
-        self.isMoving = False
-        self.rect.x = (self.rect.x // TILE_SIZE) * TILE_SIZE
-        self.rect.y = (self.rect.y // TILE_SIZE) * TILE_SIZE
-        cY = self.rect.y // TILE_SIZE
-        cX = self.rect.x // TILE_SIZE
+        cY, cX = self.rect.y // TILE_SIZE, self.rect.x // TILE_SIZE
         x, y = self.farmost_point(
             noncollide_tiles, player.rect.x, player.rect.y)
         self.findpath(cY, cX, y // TILE_SIZE, x // TILE_SIZE, level)
@@ -79,6 +78,7 @@ class Enemy(Actor):
         if self.time >= self.timeout_seconds * FPS:
             self.is_attacking = True
             self.time = 0
+            self.imageHolder = self.dinoImage
 
     def findpath(self, x, y, dX, dY, level):
         if level[x][y] == 1:

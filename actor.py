@@ -8,7 +8,8 @@ class Actor(pygame.sprite.Sprite):
         self.height = height
         self.hp = hp
         self.direction = 0
-        self.image = pygame.image.load(f'sprites/{name}r.png').convert_alpha()
+        self.imageHolder = pygame.image.load(f'sprites/{name}.png').convert_alpha()
+        self.image = self.imageHolder
         self.image = pygame.transform.scale(
             self.image, (self.width, self.height))
 

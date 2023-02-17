@@ -26,6 +26,7 @@ class Player(Actor):
         for powerup in powerup_list:
             if powerup.type_of_powerup == 'invinc':
                 for enemy in self.enemy_group:
+                    enemy.imageHolder = enemy.frango
                     enemy.is_attacking = False
                     enemy.time = 0
                 powerup.kill()
@@ -42,35 +43,33 @@ class Player(Actor):
 
         # check collision
         if keys[pygame.K_d]:
+            self.rect.x = (self.rect.x // TILE_SIZE) * TILE_SIZE
             self.rect.x += self.player_speed
             self.direction = 0
 
         elif keys[pygame.K_a]:
+            self.rect.x = (self.rect.x // TILE_SIZE) * TILE_SIZE
             self.rect.x -= self.player_speed
             self.direction = 1
 
         elif keys[pygame.K_w]:
+            self.rect.y = (self.rect.y // TILE_SIZE) * TILE_SIZE
             self.rect.y -= self.player_speed
             self.direction = 2
 
         elif keys[pygame.K_s]:
+            self.rect.y = (self.rect.y // TILE_SIZE) * TILE_SIZE
             self.rect.y += self.player_speed
             self.direction = 3
 
+
     def draw(self):
-
-        # load player image
-        player_left = pygame.image.load(
-            'sprites/bluel.png').convert_alpha()  # left
-        player_right = pygame.image.load(
-            'sprites/bluer.png').convert_alpha()  # right
-
         # 0 - RIGHT, 1 - LEFT, 2 - UP, 3 - DOWN
         if self.direction == 0:
-            self.image = player_right
+            self.image = pygame.transform.flip(self.imageHolder, False, False)
 
         elif self.direction == 1:
-            self.image = player_left
+            self.image = pygame.transform.flip(self.imageHolder, True, False)
 
 
         self.image = pygame.transform.scale(
