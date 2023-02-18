@@ -24,10 +24,10 @@ class Cutscene():
 
         # create the ground
         self.ground_tiles.add(CollideTile(
-            x=0, y=HEIGHT/2+TILE_SIZE, width=WIDTH/2+TILE_SIZE*2, height=TILE_SIZE, color='green'))
+            x=0, y=HEIGHT/2+TILE_SIZE, width=WIDTH/2+TILE_SIZE*2, height=HEIGHT/2, color='green'))
 
         self.ground_tiles.add(CollideTile(
-            x=WIDTH/2+100 + 2*TILE_SIZE, y=HEIGHT/2+TILE_SIZE, width=WIDTH/2+TILE_SIZE*2, height=TILE_SIZE, color='green'))
+            x=WIDTH/2 + 5*TILE_SIZE, y=HEIGHT/2+TILE_SIZE, width=WIDTH/2+TILE_SIZE*2, height=HEIGHT/2, color='green'))
 
         self.timer = pygame.time.Clock()
 
