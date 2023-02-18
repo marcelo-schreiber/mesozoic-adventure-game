@@ -67,7 +67,8 @@ class Cutscene():
                     pygame.quit()
                     quit()
                 if event.type == pygame.KEYDOWN:
-                    self.is_running = False
+                    if event.key == pygame.K_ESCAPE or event.key == pygame.K_SPACE or event.key == pygame.K_RETURN:
+                        self.is_running = False
 
             self.draw()
 
