@@ -1,5 +1,5 @@
 import pygame
-from settings import WIDTH, HEIGHT, FPS, font
+from settings import WIDTH, HEIGHT, FPS, font, TILE_SIZE
 
 
 def calculate_position(text, x, y):
@@ -19,9 +19,9 @@ class MainMenu():
 
         self.screen.fill('black')
         self.screen.blit(font.render(text_1, True, 'white'),
-                         calculate_position(text_1, WIDTH / 2, HEIGHT / 2 - 300))
+                         calculate_position(text_1, WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5))
         self.screen.blit(font.render(text_2, True,
-                                     'white'),  calculate_position(text_2, WIDTH / 2, HEIGHT / 2 - 150))
+                                     'white'),  calculate_position(text_2, WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 3))
         self.screen.blit(font.render(text_3, True,
                                      'white'),  calculate_position(text_3, WIDTH / 2, HEIGHT / 2))
 

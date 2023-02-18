@@ -13,7 +13,7 @@ class Cutscene():
         self.screen = screen
         self.blue = pygame.image.load('sprites/blue.png')
         self.blue = pygame.transform.scale(
-            self.blue, (64, 64))
+            self.blue, (TILE_SIZE, TILE_SIZE))
         self.blue_rect = self.blue.get_rect()
         self.blue_rect.x = 0
         self.blue_rect.y = HEIGHT/2
@@ -24,10 +24,10 @@ class Cutscene():
 
         # create the ground
         self.ground_tiles.add(CollideTile(
-            x=0, y=HEIGHT/2+TILE_SIZE, width=WIDTH/2+100, height=TILE_SIZE, color='green'))
+            x=0, y=HEIGHT/2+TILE_SIZE, width=WIDTH/2+TILE_SIZE*2, height=HEIGHT/2, color='green'))
 
         self.ground_tiles.add(CollideTile(
-            x=WIDTH/2+100 + 2*TILE_SIZE, y=HEIGHT/2+TILE_SIZE, width=WIDTH/2+100, height=TILE_SIZE, color='green'))
+            x=WIDTH/2 + 5*TILE_SIZE, y=HEIGHT/2+TILE_SIZE, width=WIDTH/2+TILE_SIZE*2, height=HEIGHT/2, color='green'))
 
         self.timer = pygame.time.Clock()
 
@@ -36,9 +36,9 @@ class Cutscene():
 
     def move_blue(self):
         # move to the right
-        if self.blue_rect.x < WIDTH/2 + 100:
-            self.blue_rect.x += 5
-            pygame.mixer.music.play()
+        if self.blue_rect.x < WIDTH/2 + TILE_SIZE * 2:
+            self.blue_rect.x += TILE_SIZE//8
+            #pygame.mixer.music.play()
         else:
             # Play the music
             self.blue_rect.y += 12
@@ -51,7 +51,7 @@ class Cutscene():
         text_1 = 'In the beginning, there was blue.'
 
         self.screen.blit(font.render(text_1, True, 'white'),
-                         calculate_position(text_1, WIDTH / 2, HEIGHT / 2 - 300))
+                         calculate_position(text_1, WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5))
 
     def draw(self):
         self.screen.fill('black')
