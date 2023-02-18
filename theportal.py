@@ -20,16 +20,16 @@ class Cutscene():
         self.screen.blit(self.portal, self.portal_rect)
 
     def move_portal(self):
-        if self.portal_rect.y < HEIGHT/2:
-            if self.portal.get_alpha() < 90:
-                self.is_running = False
-            self.portal_rect.y += 5
-            self.portal.set_alpha(self.portal.get_alpha() - 0.4)
+        if self.portal_rect.y < HEIGHT // 8:
+            self.portal_rect.y += TILE_SIZE // 8
+            self.portal.set_alpha(self.portal.get_alpha() - 1.5)
+        else:
+            self.is_running = False
 
     def draw_text(self):
         text_1 = 'It time travelled to the mesozoic era...'
         self.screen.blit(font.render(text_1, True, 'white'),
-                         calculate_position(text_1, WIDTH / 2, HEIGHT / 2 - 300))
+                         calculate_position(text_1, WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5))
 
     def draw(self):
         self.screen.fill('black')

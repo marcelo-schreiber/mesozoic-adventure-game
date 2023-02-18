@@ -1,13 +1,13 @@
 import pygame
 
 pygame.init()
-font = pygame.font.SysFont('Roboto', 42)
 
 FPS = 30
-TILE_SIZE = 64
+TILE_SIZE = 48
 WIDTH, HEIGHT = 16 * TILE_SIZE, 16 * TILE_SIZE
 PLAYER_HP = 1
 PLAYER_NAME = 'blue'
+font = pygame.font.SysFont('Roboto', TILE_SIZE)
 
 arrayMap_1 = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
               [1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
