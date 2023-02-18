@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 FPS = 30
-TILE_SIZE = 32
+TILE_SIZE = 64
 WIDTH, HEIGHT = 16 * TILE_SIZE, 16 * TILE_SIZE
 PLAYER_HP = 1
 PLAYER_NAME = 'blue'
