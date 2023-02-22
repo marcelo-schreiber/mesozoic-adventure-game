@@ -106,7 +106,26 @@ class Player(Actor):
             else:
                 enemy.take_damage(level, self.noncollide_tiles, self)
 
+    def get_direction(self):
+        keys = pygame.key.get_pressed()
+        
+        is_horizontal = self.direction != 2 and self.direction != 3
+        is_vertical = self.direction != 0 and self.direction != 1
+
+        if keys[pygame.K_d] and is_horizontal:
+            self.direction = 0
+
+        elif keys[pygame.K_a] and is_horizontal:
+            self.direction = 1
+
+        elif keys[pygame.K_w] and is_vertical:
+            self.direction = 2
+
+        elif keys[pygame.K_s] and is_vertical:
+            self.direction = 3
+
     def animate(self):
+
         if self.direction == 0:
             self.rect.x += self.player_speed
 
@@ -119,6 +138,7 @@ class Player(Actor):
         else:
             self.rect.y += self.player_speed
 
+        self.get_direction()
     def player_kill(self):
         self.kill()
         pygame.quit()
@@ -133,6 +153,7 @@ class Player(Actor):
             self.move()
         else:
             self.animate()
+
         self.check_collision()
         self.collide_powerup()
         self.collide_enemy(level)
