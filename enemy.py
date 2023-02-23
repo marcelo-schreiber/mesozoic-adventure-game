@@ -24,16 +24,19 @@ class Enemy(Actor):
         self.dinoImage = pygame.image.load(
             f'sprites/{self.name}.png').convert_alpha()
         self.frango = pygame.image.load(
-            f'sprites/frango.png').convert_alpha()
+            f'sprites/chickenr.png').convert_alpha()
 
     def draw(self):
         # 0 - RIGHT, 1 - LEFT, 2 - UP, 3 - DOWN
 
         if self.direction == 0:
-            self.image = pygame.transform.flip(self.imageHolder, False, False)
+            self.image = self.imageHolder
+            self.flipped = False
 
         elif self.direction == 1:
-            self.image = pygame.transform.flip(self.imageHolder, True, False)
+            if self.flipped == False:
+                self.image = pygame.transform.flip(self.imageHolder, True, False)
+                self.flipped = True
 
         self.image = pygame.transform.scale(
             self.image, (self.width, self.height))
@@ -79,6 +82,7 @@ class Enemy(Actor):
             self.is_attacking = True
             self.time = 0
             self.imageHolder = self.dinoImage
+            self.flipped = False
 
     def findpath(self, x, y, dX, dY, level):
         if level[x][y] == 1:
