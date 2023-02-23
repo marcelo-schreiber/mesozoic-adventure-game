@@ -1,6 +1,6 @@
 import pygame
 from actor import Actor
-from settings import FPS, TILE_SIZE, font
+from settings import FPS, TILE_SIZE
 from math import sqrt
 
 
@@ -24,29 +24,22 @@ class Enemy(Actor):
         self.dinoImage = pygame.image.load(
             f'sprites/{self.name}.png').convert_alpha()
         self.frango = pygame.image.load(
-            f'sprites/chickenr.png').convert_alpha()
+            f'sprites/chicken.png').convert_alpha()
 
     def draw(self):
         # 0 - RIGHT, 1 - LEFT, 2 - UP, 3 - DOWN
 
-        if self.direction == 0:
-            self.image = self.imageHolder
-            self.flipped = False
+        if not self.is_attacking:
+            self.image = self.frango
+
+        elif self.direction == 0:
+            self.image = self.imageR
 
         elif self.direction == 1:
-            if self.flipped == False:
-                self.image = pygame.transform.flip(self.imageHolder, True, False)
-                self.flipped = True
+            self.image = self.imageL
 
         self.image = pygame.transform.scale(
             self.image, (self.width, self.height))
-
-        # draw a text above the enemy
-        text = font.render(
-            f'{self.is_attacking}', True, 'red')
-        text_rect = text.get_rect(center=(self.rect.centerx, self.rect.y - 10))
-        screen = pygame.display.get_surface()
-        screen.blit(text, text_rect)
 
     def calculate_distance(self, x1, y1, x2, y2):
         return sqrt((x2 - x1)**2 + (y2 - y1)**2)
@@ -68,7 +61,6 @@ class Enemy(Actor):
         self.canHurt = False
         self.isMoving = False
         self.is_attacking = True
-        self.imageHolder = self.dinoImage
         self.speedSet = 1
         self.pellets.clear()
         cY, cX = self.rect.y // TILE_SIZE, self.rect.x // TILE_SIZE
