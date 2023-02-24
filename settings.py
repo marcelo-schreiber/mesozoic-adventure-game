@@ -9,6 +9,8 @@ PLAYER_HP = 1
 PLAYER_NAME = 'blue'
 font = pygame.font.SysFont('Roboto', TILE_SIZE)
 
+mesozoic_eras = ['Triassic', 'Jurassic', 'Creataceous']
+
 arrayMap_1 = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
               [1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
               [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],

@@ -1,4 +1,5 @@
 import pygame
+import random
 from enemy import Enemy
 from player import Player
 from settings import TILE_SIZE
@@ -16,8 +17,10 @@ PTEDOAUSTRO = 7
 class CollideTile(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, color):
         super().__init__()
-        self.image = pygame.Surface([width, height])
-        self.image.fill(color)
+        self.image = pygame.image.load(
+            f'sprites/grass{random.randint(0, 1)}.png').convert_alpha()
+        self.image = pygame.transform.scale(
+            self.image, (width, height))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -38,8 +41,10 @@ class PowerUpTile(pygame.sprite.Sprite):
 class NonCollideTiles(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, color):
         super().__init__()
-        self.image = pygame.Surface([width, height])
-        self.image.fill(color)
+        self.image = pygame.image.load(
+            f'sprites/dirt{random.randint(0, 1)}.png').convert_alpha()
+        self.image = pygame.transform.scale(
+            self.image, (width, height))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
