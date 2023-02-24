@@ -24,10 +24,10 @@ class Cutscene():
 
         # create the ground
         self.ground_tiles.add(CollideTile(
-            x=0, y=HEIGHT/2+TILE_SIZE, width=WIDTH/2+TILE_SIZE*2, height=HEIGHT/2, color='green'))
+            x=0, y=HEIGHT/2+TILE_SIZE, width=WIDTH/2+TILE_SIZE*2, height=HEIGHT/2, color=(79, 88, 41)))
 
         self.ground_tiles.add(CollideTile(
-            x=WIDTH/2 + 5*TILE_SIZE, y=HEIGHT/2+TILE_SIZE, width=WIDTH/2+TILE_SIZE*2, height=HEIGHT/2, color='green'))
+            x=WIDTH/2 + 5*TILE_SIZE, y=HEIGHT/2+TILE_SIZE, width=WIDTH/2+TILE_SIZE*2, height=HEIGHT/2, color=(79, 88, 41)))
 
         self.timer = pygame.time.Clock()
 
@@ -38,7 +38,7 @@ class Cutscene():
         # move to the right
         if self.blue_rect.x < WIDTH/2 + TILE_SIZE * 2:
             self.blue_rect.x += TILE_SIZE//8
-            #pygame.mixer.music.play()
+            pygame.mixer.music.play()
         else:
             # Play the music
             self.blue_rect.y += 12

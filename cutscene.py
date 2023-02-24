@@ -2,12 +2,14 @@ import pygame
 import math
 from settings import *
 
+
 class Cutscene:
     class Actor:
         def __init__(self, name, x, y, width, height):
             try:
                 self.image = pygame.image.load(name).convert_alpha()
-                self.image = pygame.transform.scale(self.image, (width, height))
+                self.image = pygame.transform.scale(
+                    self.image, (width, height))
                 self.rect = self.image.get_rect()
                 self.rect.x = x
                 self.rect.y = y
@@ -31,10 +33,10 @@ class Cutscene:
         self.clock = pygame.time.Clock()
 
     def createActor(self, name, x, y, width, height):
-        actor = self.Actor(name, x, y, width, height)  
+        actor = self.Actor(name, x, y, width, height)
         self.actors.append(actor)
         return actor
-    
+
     def createText(self, string, x, y):
         text = self.Text(string, x, y)
         self.texts.append(text)
@@ -70,7 +72,8 @@ class Cutscene:
 
     def write_texts(self):
         for i in self.texts:
-            self.screen.blit(font.render(i.text, True, "white"), self.calculate_text_position(i.text, i.x, i.y))
+            self.screen.blit(font.render(i.text, True, "white"),
+                             self.calculate_text_position(i.text, i.x, i.y))
 
     def calculate_text_position(self, text, x, y):
         text_width, text_height = font.size(text)
@@ -78,7 +81,7 @@ class Cutscene:
 
     def update_screen(self):
         self.clock.tick(FPS)
-        pygame.display.update() 
+        pygame.display.update()
 
     def play(self):
         while self.is_running:
@@ -96,22 +99,31 @@ class Cutscene:
             self.write_texts()
             self.update_screen()
 
+
 class mainmenu(Cutscene):
     def __init__(self):
         super().__init__()
-        self.createText("Blue\'s Mesosoic Adventure", WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5)
-        self.createText("press space, enter or escape to start", WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 3)
-        self.createText("MADE WITH THE BINDER CUTSCENE CLASS", WIDTH / 2, HEIGHT / 2)
+        self.createText("Blue\'s Mesosoic Adventure",
+                        WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5)
+        self.createText("press space, enter or escape to start",
+                        WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 3)
+        self.createText("MADE WITH THE BINDER CUTSCENE CLASS",
+                        WIDTH / 2, HEIGHT / 2)
+
     def update(self):
         pass
+
 
 class thefall(Cutscene):
     def __init__(self):
         super().__init__()
-        self.blue = self.createActor("sprites/blue.png", 0, HEIGHT/2, TILE_SIZE, TILE_SIZE)
-
-        self.createActor("green", 0, HEIGHT/2+TILE_SIZE, WIDTH/2+TILE_SIZE*2, HEIGHT/2)
-        self.createText("In the beggining, there was Blue.", WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5)
+        self.createActor("sprites/bg.png", 0, 0, WIDTH, HEIGHT)
+        self.createActor((79, 88, 41), 0, HEIGHT/2+TILE_SIZE,
+                         WIDTH/2+TILE_SIZE*2, HEIGHT/2)
+        self.createText("In the beggining, there was Blue.",
+                        WIDTH / 2, 64)
+        self.blue = self.createActor(
+            "sprites/blue.png", 0, HEIGHT/2, TILE_SIZE, TILE_SIZE)
 
     def update(self):
         if not self.move_to(self.blue.rect, WIDTH/2 + TILE_SIZE * 2, self.blue.rect.y, 5):
@@ -123,12 +135,15 @@ class thefall(Cutscene):
 
         self.is_running = False
 
+
 class theportal(Cutscene):
     def __init__(self):
         super().__init__()
-        self.portal = self.createActor("sprites/portal.png", 0, -HEIGHT, WIDTH, HEIGHT*2)
+        self.portal = self.createActor(
+            "sprites/portal.png", 0, -HEIGHT, WIDTH, HEIGHT*2)
 
-        self.createText("She time travelled to the Mesosoic Era.", WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5)
+        self.createText("She time travelled to the Mesosoic Era.",
+                        WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5)
 
     def update(self):
         if not self.move_to(self.portal.rect, self.portal.rect.x, 0, 10):
