@@ -136,6 +136,24 @@ class thefall(Cutscene):
         self.is_running = False
 
 
+class level_pass(Cutscene):
+    def __init__(self, text):
+        super().__init__()
+        self.createActor("sprites/bg.png", 0, 0, WIDTH, HEIGHT)
+        self.createActor((79, 88, 41), 0, HEIGHT/2+TILE_SIZE,
+                         WIDTH, HEIGHT)
+
+        self.createText(f'{text} period =>', WIDTH / 2, 64)
+        self.blue = self.createActor(
+            "sprites/blue.png", 0, HEIGHT/2, TILE_SIZE, TILE_SIZE)
+
+    def update(self):
+        if not self.move_to(self.blue.rect, WIDTH, self.blue.rect.y, 5):
+            return
+
+        self.is_running = False
+
+
 class theportal(Cutscene):
     def __init__(self):
         super().__init__()

@@ -3,17 +3,20 @@ from settings import arrayMaps, WIDTH, HEIGHT, FPS
 from drawboard import draw_board
 from player import Player
 from enemy import Enemy
-from settings import TILE_SIZE, font
+from settings import TILE_SIZE, font, mesozoic_eras
 
 from mainmenu import calculate_position
 
-from cutscene import thefall, theportal, mainmenu
+from cutscene import thefall, theportal, mainmenu, level_pass
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 timer = pygame.time.Clock()
 
 # set caption
 pygame.display.set_caption('Blue\'s Adventure in the Mesozoic Era')
+pygame.mixer.init()
+pygame.mixer.music.load('sounds/Jurassic Park Theme 8 bit.mp3')
+pygame.mixer.music.set_volume(0.2)
 
 
 def main():
@@ -23,16 +26,28 @@ def main():
 
     running = True
     is_paused = False
+    has_passed_level = False
+
     current_level_idx = 0
+    pygame.mixer.music.play()
+
+    # initial cutscene is the level pass too
+    level_pass(mesozoic_eras[current_level_idx]).play()
+
     while current_level_idx < len(arrayMaps):
         current_map = arrayMaps[current_level_idx]
         collide_tiles, noncollide_tiles, powerup_tiles, enemy_group, player_group, player = draw_board(
             current_map)
 
+        if has_passed_level:
+            level_pass(mesozoic_eras[current_level_idx]).play()
+            has_passed_level = False
+
         running = True
+
         while running:
             if len(enemy_group) == 0 or len(powerup_tiles) == 0:
-                print("venceu")
+                has_passed_level = True
                 current_level_idx += 1
                 break
             for event in pygame.event.get():
