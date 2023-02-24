@@ -22,13 +22,13 @@ def main():
     mainmenu().play()
     thefall().play()
     theportal().play()
+    current_level_idx = 0
     # initial cutscene is the level pass too
     level_pass(mesozoic_eras[current_level_idx]).play()
 
     running = True
     is_paused = False
     has_passed_level = False
-    current_level_idx = 0
 
     pygame.mixer.music.play(-1)  # -1 is for infinite loop of the music
 
