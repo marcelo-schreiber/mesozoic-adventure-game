@@ -107,9 +107,7 @@ class mainmenu(Cutscene):
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5)
         self.createText("press space, enter or escape to start",
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 3)
-        self.createText("MADE WITH THE BINDER CUTSCENE CLASS",
-                        WIDTH / 2, HEIGHT / 2)
-
+        pygame.mixer.music.play(-1)
     def update(self):
         pass
 

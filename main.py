@@ -19,13 +19,10 @@ pygame.mixer.music.set_volume(0.2)
 
 
 def main():
-    current_level_idx = 0
-
-    pygame.mixer.music.play(-1)
-
     mainmenu().play()
     thefall().play()
     theportal().play()
+    current_level_idx = 0
     # initial cutscene is the level pass too
     level_pass(mesozoic_eras[current_level_idx]).play()
 
