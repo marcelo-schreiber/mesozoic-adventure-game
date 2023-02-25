@@ -127,10 +127,16 @@ class thefall(Cutscene):
                          WIDTH/2+TILE_SIZE*2, HEIGHT/2)
         self.blue = self.createActor(
             "sprites/blue.png", 0, HEIGHT/2, TILE_SIZE, TILE_SIZE)
+        self.played_sound = False
 
     def update(self):
         if not self.move_to(self.blue.rect, WIDTH/2 + TILE_SIZE * 2, self.blue.rect.y, 5):
             return
+
+        if not self.played_sound:  # play sound only once
+            pygame.mixer.music.load('sounds/waa.mp3')
+            pygame.mixer.music.play(0)
+            self.played_sound = True
 
         if not self.move_to(self.blue.rect, self.blue.rect.x, HEIGHT, 12):
             self.blue.image = self.rotate(self.blue.image, -7)
@@ -149,7 +155,7 @@ class game_over(Cutscene):
             "And after her long trip, blue arrived in time for Leo's birthday.", WIDTH/2, (HEIGHT/2) + HEIGHT/3, "white")
         self.text = self.createText(
             "Happy Birthday!", WIDTH/2, (HEIGHT/2) + HEIGHT/3 + TILE_SIZE, "white")
-        
+
         pygame.mixer.music.load('sounds/ending_theme.mp3')
         pygame.mixer.music.play(-1)
 
@@ -160,28 +166,39 @@ class game_over(Cutscene):
             return
         self.is_running = False
 
+
 class credits(Cutscene):
     def __init__(self):
         super().__init__()
-        self.createText("Made by Binder & Marcelo", WIDTH/2, HEIGHT + HEIGHT/2, "white")
-        self.createText("Pixel Art: Marcelo", WIDTH/2, HEIGHT + 2*(HEIGHT)/2, "white")
-        self.createText("Enemy Pathfinding: Binder", WIDTH/2, HEIGHT + 3*(HEIGHT)/2, "white")
-        self.createText("Player movement: Marcelo", WIDTH/2, HEIGHT + 4*(HEIGHT)/2, "white")
-        self.createText("Level System: Binder", WIDTH/2, HEIGHT + 5*(HEIGHT)/2, "white")
-        self.createText("Rendering System: Marcelo", WIDTH/2, HEIGHT + 6*(HEIGHT)/2, "white")
-        self.createText("Cutscene System: Binder", WIDTH/2, HEIGHT + 7*(HEIGHT)/2, "white")
-        self.createText("Cutscenes: Marcelo", WIDTH/2, HEIGHT + 8*(HEIGHT)/2, "white")
-        self.createText("Level Design: Binder", WIDTH/2, HEIGHT + 9*(HEIGHT)/2, "white")
+        self.createText("Made by Binder & Marcelo", WIDTH /
+                        2, HEIGHT + HEIGHT/2, "white")
+        self.createText("Pixel Art: Marcelo", WIDTH/2,
+                        HEIGHT + 2*(HEIGHT)/2, "white")
+        self.createText("Enemy Pathfinding: Binder", WIDTH /
+                        2, HEIGHT + 3*(HEIGHT)/2, "white")
+        self.createText("Player movement: Marcelo", WIDTH /
+                        2, HEIGHT + 4*(HEIGHT)/2, "white")
+        self.createText("Level System: Binder", WIDTH/2,
+                        HEIGHT + 5*(HEIGHT)/2, "white")
+        self.createText("Rendering System: Marcelo", WIDTH /
+                        2, HEIGHT + 6*(HEIGHT)/2, "white")
+        self.createText("Cutscene System: Binder", WIDTH /
+                        2, HEIGHT + 7*(HEIGHT)/2, "white")
+        self.createText("Cutscenes: Marcelo", WIDTH/2,
+                        HEIGHT + 8*(HEIGHT)/2, "white")
+        self.createText("Level Design: Binder", WIDTH/2,
+                        HEIGHT + 9*(HEIGHT)/2, "white")
         self.createText("THE END", WIDTH/2, HEIGHT + 11*(HEIGHT)/2, "white")
 
     def update(self):
         for i in self.texts:
             i.y -= 5
 
+
 class level_pass(Cutscene):
     def __init__(self, text):
         super().__init__()
-        #self.createText(f'{text} ->', WIDTH - (TILE_SIZE+25), HEIGHT/2, "black")
+        # self.createText(f'{text} ->', WIDTH - (TILE_SIZE+25), HEIGHT/2, "black")
         self.createActor("sprites/bg.png", 0, 0, WIDTH, HEIGHT)
         self.createActor((79, 88, 41), 0, HEIGHT/2+TILE_SIZE,
                          WIDTH, HEIGHT)
