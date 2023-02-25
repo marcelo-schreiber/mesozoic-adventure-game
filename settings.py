@@ -2,12 +2,16 @@ import pygame
 
 pygame.init()
 
+# Add later to pyinstaller, examples:
+# pyinstaller --add-binary "ARCADECLASSIC.TTF;." --onefile breakout.py
+# pyinstaller --onefile --windowed --icon=app.ico app.py
+
 FPS = 30
 TILE_SIZE = 48
 WIDTH, HEIGHT = 16 * TILE_SIZE, 16 * TILE_SIZE
 PLAYER_HP = 1
 PLAYER_NAME = 'blue'
-font = pygame.font.SysFont('Roboto', TILE_SIZE)
+font = pygame.font.Font('./Minecraft.ttf', TILE_SIZE//2)  # ARCADECLASSIC.TTF
 
 mesozoic_eras = ['Triassic', 'Jurassic', 'Creataceous']
 

@@ -103,7 +103,7 @@ class Cutscene:
 class mainmenu(Cutscene):
     def __init__(self):
         super().__init__()
-        self.createText("Blue\'s Mesosoic Adventure",
+        self.createText("Blue\'s Mesozoic Adventure",
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5)
         self.createText("press space, enter or escape to start",
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 3)
@@ -134,14 +134,29 @@ class thefall(Cutscene):
         self.is_running = False
 
 
+class game_over(Cutscene):
+    def __init__(self):
+        super().__init__()
+        self.createActor("images/santa ceia.jpg", 0, 0, WIDTH, HEIGHT)
+        self.image = self.createActor("images/leo.jpg", WIDTH/4,
+                                      HEIGHT, WIDTH / 2, HEIGHT / 2)
+        self.text = self.createText(
+            "After all, blue arrived in time for Leo's birthday.", WIDTH/2, HEIGHT/2)
+        self.text = self.createText(
+            "Happy Birthday!", WIDTH/2, HEIGHT/2+TILE_SIZE)
+
+    def update(self):
+        if not self.move_to(self.image.rect, WIDTH/4, HEIGHT/4, 3):
+            return
+
+
 class level_pass(Cutscene):
     def __init__(self, text):
         super().__init__()
         self.createActor("sprites/bg.png", 0, 0, WIDTH, HEIGHT)
         self.createActor((79, 88, 41), 0, HEIGHT/2+TILE_SIZE,
                          WIDTH, HEIGHT)
-
-        self.createText(f'{text} period =>', WIDTH / 2, 64)
+        self.createText(f'{text} ->', WIDTH - TILE_SIZE, HEIGHT/2)
         self.blue = self.createActor(
             "sprites/blue.png", 0, HEIGHT/2, TILE_SIZE, TILE_SIZE)
 
@@ -161,7 +176,7 @@ class theportal(Cutscene):
         self.portal = self.createActor(
             "sprites/portal.png", 0, -HEIGHT, WIDTH, HEIGHT*2)
 
-        self.createText("She time travelled to the Mesosoic Era.",
+        self.createText("She time travelled to the Mesozoic Era.",
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5)
 
     def update(self):
