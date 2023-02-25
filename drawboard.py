@@ -55,10 +55,10 @@ def draw_board(level, period):
     # (the board should be 30 blocks wide and 30 blocks high)
     # create new sprite group
 
-    name = "pteudoaustro"
+    name = "ptedoaustro"
     if period == "Triassic":
         name = "eoraptor"
-    else:
+    elif period == "Jurassic":
         name = "yi qi"
 
     collide_tiles = pygame.sprite.Group()

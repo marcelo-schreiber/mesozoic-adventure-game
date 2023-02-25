@@ -7,7 +7,7 @@ from settings import TILE_SIZE, font, mesozoic_eras
 
 from mainmenu import calculate_position
 
-from cutscene import thefall, theportal, mainmenu, level_pass, game_over
+from cutscene import thefall, theportal, mainmenu, level_pass, game_over, credits
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 timer = pygame.time.Clock()
@@ -26,11 +26,10 @@ def main():
     current_level_idx = 0
     
     # initial cutscene is the level pass too
-    level_pass(mesozoic_eras[current_level_idx]).play()
 
     running = True
     is_paused = False
-    has_passed_level = False
+    has_passed_level = True
 
     pygame.mixer.music.load('sounds/triassic_theme.mp3')
     pygame.mixer.music.play(-1)  # -1 is for infinite loop of the music
@@ -90,6 +89,7 @@ def main():
     # if the player has passed all the levels
     if current_level_idx == len(arrayMaps):
         game_over().play()
+        credits().play()
 
     pygame.display.quit()
     pygame.quit()
