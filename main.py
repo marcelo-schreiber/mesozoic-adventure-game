@@ -14,12 +14,14 @@ timer = pygame.time.Clock()
 
 # set caption
 pygame.display.set_caption('Blue\'s Adventure in the Mesozoic Era')
-pygame.mixer.music.load('sounds/Jurassic Park Theme 8 bit.mp3')
+pygame.mixer.music.load('sounds/menu_theme.mp3')
 pygame.mixer.music.set_volume(0.2)
 
 
 def main():
     current_level_idx = 0
+
+    pygame.mixer.music.play(-1)
 
     mainmenu().play()
     thefall().play()
@@ -31,6 +33,7 @@ def main():
     is_paused = False
     has_passed_level = False
 
+    pygame.mixer.music.load('sounds/triassic_theme.mp3')
     pygame.mixer.music.play(-1)  # -1 is for infinite loop of the music
 
     while current_level_idx < len(arrayMaps):
@@ -40,6 +43,8 @@ def main():
 
         if has_passed_level:
             level_pass(mesozoic_eras[current_level_idx]).play()
+            pygame.mixer.music.load(f'sounds/{mesozoic_eras[current_level_idx]}_theme.mp3')
+            pygame.mixer.music.play(-1)
             has_passed_level = False
 
         running = True
