@@ -79,6 +79,9 @@ class Cutscene:
         text_width, text_height = font.size(text)
         return (x - text_width / 2, y - text_height / 2)
 
+    def get_text_size(self, text):
+        return font.size(text)
+
     def update_screen(self):
         self.clock.tick(FPS)
         pygame.display.update()
@@ -108,6 +111,7 @@ class mainmenu(Cutscene):
         self.createText("press space, enter or escape to start",
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 3)
         pygame.mixer.music.play(-1)
+
     def update(self):
         pass
 
@@ -156,12 +160,21 @@ class level_pass(Cutscene):
         self.createActor("sprites/bg.png", 0, 0, WIDTH, HEIGHT)
         self.createActor((79, 88, 41), 0, HEIGHT/2+TILE_SIZE,
                          WIDTH, HEIGHT)
-        self.createText(f'{text} ->', WIDTH - TILE_SIZE, HEIGHT/2)
+
+        text_width, text_height = self.get_text_size(text)
+
+        text_x = WIDTH - text_width
+
+        self.createActor((162, 124, 53), text_x - TILE_SIZE - TILE_SIZE//2,
+                         HEIGHT/2 - text_height, text_width + TILE_SIZE, text_height + TILE_SIZE//2)
+
+        text = self.createText(f'{text} =>', text_x, HEIGHT/2)
+
         self.blue = self.createActor(
             "sprites/blue.png", 0, HEIGHT/2, TILE_SIZE, TILE_SIZE)
 
         pygame.mixer.music.load('sounds/mushroom.mp3')
-        pygame.mixer.music.play(-1)
+        pygame.mixer.music.play()
 
     def update(self):
         if not self.move_to(self.blue.rect, WIDTH, self.blue.rect.y, 12):
