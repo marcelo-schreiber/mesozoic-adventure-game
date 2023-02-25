@@ -84,6 +84,7 @@ def main():
             timer.tick(FPS)
             pygame.display.update()  # update the display
 
+    # if the player has passed all the levels
     if current_level_idx == len(arrayMaps):
         game_over().play()
 

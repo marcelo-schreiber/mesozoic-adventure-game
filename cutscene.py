@@ -103,7 +103,7 @@ class Cutscene:
 class mainmenu(Cutscene):
     def __init__(self):
         super().__init__()
-        self.createText("Blue\'s Mesosoic Adventure",
+        self.createText("Blue\'s Mesozoic Adventure",
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5)
         self.createText("press space, enter or escape to start",
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 3)
@@ -175,7 +175,7 @@ class theportal(Cutscene):
         self.portal = self.createActor(
             "sprites/portal.png", 0, -HEIGHT, WIDTH, HEIGHT*2)
 
-        self.createText("She time travelled to the Mesosoic Era.",
+        self.createText("She time travelled to the Mesozoic Era.",
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5)
 
     def update(self):
