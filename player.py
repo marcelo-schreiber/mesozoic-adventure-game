@@ -2,6 +2,7 @@ import pygame
 from actor import Actor
 from settings import TILE_SIZE, PLAYER_HP, PLAYER_NAME
 
+
 class Player(Actor):
     def __init__(self, x, y, size, collide_tiles, poweup_tiles, noncollide_tiles, enemy_group):
         super().__init__(x, y, size, size, PLAYER_HP, PLAYER_NAME)
@@ -15,7 +16,7 @@ class Player(Actor):
 
         #   BINDER :)
         self.points = 0
-        
+
     def can_move(self):
         return self.rect.x % TILE_SIZE == 0 and self.rect.y % TILE_SIZE == 0
 
@@ -33,7 +34,6 @@ class Player(Actor):
                 self.points += 10
                 powerup.kill()
 
-
     def take_damage(self, damage):
         self.hp -= damage
 
@@ -41,26 +41,25 @@ class Player(Actor):
         keys = pygame.key.get_pressed()
 
         # check collision
-        if keys[pygame.K_d]:
+        if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             self.rect.x = (self.rect.x // TILE_SIZE) * TILE_SIZE
             self.rect.x += self.player_speed
             self.direction = 0
 
-        elif keys[pygame.K_a]:
+        elif keys[pygame.K_a] or keys[pygame.K_LEFT]:
             self.rect.x = (self.rect.x // TILE_SIZE) * TILE_SIZE
             self.rect.x -= self.player_speed
             self.direction = 1
 
-        elif keys[pygame.K_w]:
+        elif keys[pygame.K_w] or keys[pygame.K_UP]:
             self.rect.y = (self.rect.y // TILE_SIZE) * TILE_SIZE
             self.rect.y -= self.player_speed
             self.direction = 2
 
-        elif keys[pygame.K_s]:
+        elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
             self.rect.y = (self.rect.y // TILE_SIZE) * TILE_SIZE
             self.rect.y += self.player_speed
             self.direction = 3
-
 
     def draw(self):
         # 0 - RIGHT, 1 - LEFT, 2 - UP, 3 - DOWN
@@ -69,7 +68,6 @@ class Player(Actor):
 
         elif self.direction == 1:
             self.image = self.imageL
-
 
         self.image = pygame.transform.scale(
             self.image, (self.width, self.height))
@@ -108,20 +106,20 @@ class Player(Actor):
 
     def get_direction(self):
         keys = pygame.key.get_pressed()
-        
+
         is_horizontal = self.direction != 2 and self.direction != 3
         is_vertical = self.direction != 0 and self.direction != 1
 
-        if keys[pygame.K_d] and is_horizontal:
+        if (keys[pygame.K_d] or keys[pygame.K_RIGHT]) and is_horizontal:
             self.direction = 0
 
-        elif keys[pygame.K_a] and is_horizontal:
+        elif (keys[pygame.K_a] or keys[pygame.K_LEFT]) and is_horizontal:
             self.direction = 1
 
-        elif keys[pygame.K_w] and is_vertical:
+        elif (keys[pygame.K_w] or keys[pygame.K_UP]) and is_vertical:
             self.direction = 2
 
-        elif keys[pygame.K_s] and is_vertical:
+        elif (keys[pygame.K_s] or keys[pygame.K_UP]) and is_vertical:
             self.direction = 3
 
     def animate(self):
@@ -139,6 +137,7 @@ class Player(Actor):
             self.rect.y += self.player_speed
 
         self.get_direction()
+
     def player_kill(self):
         self.kill()
         pygame.quit()
