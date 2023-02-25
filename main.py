@@ -7,7 +7,7 @@ from settings import TILE_SIZE, font, mesozoic_eras
 
 from mainmenu import calculate_position
 
-from cutscene import thefall, theportal, mainmenu, level_pass
+from cutscene import thefall, theportal, mainmenu, level_pass, game_over
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 timer = pygame.time.Clock()
@@ -19,10 +19,12 @@ pygame.mixer.music.set_volume(0.2)
 
 
 def main():
+
     mainmenu().play()
     thefall().play()
     theportal().play()
     current_level_idx = 0
+
     # initial cutscene is the level pass too
     level_pass(mesozoic_eras[current_level_idx]).play()
 
@@ -81,6 +83,9 @@ def main():
 
             timer.tick(FPS)
             pygame.display.update()  # update the display
+
+    if current_level_idx == len(arrayMaps):
+        game_over().play()
 
     pygame.display.quit()
     pygame.quit()
