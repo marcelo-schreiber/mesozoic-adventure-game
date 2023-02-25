@@ -19,6 +19,8 @@ pygame.mixer.music.set_volume(0.2)
 
 
 def main():
+    current_level_idx = 0
+    
     mainmenu().play()
     thefall().play()
     theportal().play()
@@ -28,7 +30,6 @@ def main():
     running = True
     is_paused = False
     has_passed_level = False
-    current_level_idx = 0
 
     pygame.mixer.music.play(-1)  # -1 is for infinite loop of the music
 
