@@ -6,7 +6,7 @@ pygame.init()
 # pyinstaller --onefile --windowed --noconsole --icon=images/eoraptor.png app.py
 
 FPS = 30
-TILE_SIZE = 48
+TILE_SIZE = 64
 WIDTH, HEIGHT = 16 * TILE_SIZE, 16 * TILE_SIZE
 PLAYER_HP = 1
 PLAYER_NAME = 'blue'

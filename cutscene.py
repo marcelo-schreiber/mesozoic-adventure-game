@@ -111,6 +111,8 @@ class mainmenu(Cutscene):
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5, "white")
         self.createText("press space, enter or escape to start",
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 3, "white")
+        self.createText("T1GAMES FIRST PROJECT",
+                        WIDTH / 2, HEIGHT / 2, "red")
         pygame.mixer.music.play(-1)
 
     def update(self):
@@ -120,8 +122,10 @@ class mainmenu(Cutscene):
 class thefall(Cutscene):
     def __init__(self):
         super().__init__()
-        self.createText("In the beggining, there was Blue.",
-                        WIDTH / 2, 64, "black")
+        self.createText("One day, blue was taking a walk",
+                        WIDTH / 2, TILE_SIZE*2, "black")
+        self.createText("When suddenly, she tripped and fell down a hill",
+                        WIDTH / 2, TILE_SIZE * 3, "black")
         self.createActor("sprites/bg.png", 0, 0, WIDTH, HEIGHT)
         self.createActor((79, 88, 41), 0, HEIGHT/2+TILE_SIZE,
                          WIDTH/2+TILE_SIZE*2, HEIGHT/2)
@@ -196,8 +200,8 @@ class level_pass(Cutscene):
 
         text_x = WIDTH - text_width
 
-        self.createActor((162, 124, 53), text_x - TILE_SIZE - TILE_SIZE//2,
-                         HEIGHT/2 - text_height, text_width + TILE_SIZE, text_height + TILE_SIZE//2)
+        self.createActor((162, 124, 53), text_x - text_width,
+                         HEIGHT/2 - text_height, text_width * 2, text_height + TILE_SIZE//2)
 
         text = self.createText(f'{text} =>', text_x, HEIGHT/2, "black")
 
@@ -220,11 +224,11 @@ class theportal(Cutscene):
         self.portal = self.createActor(
             "sprites/portal.png", 0, -HEIGHT, WIDTH, HEIGHT*2)
 
-        self.createText("She time travelled to the Mesozoic Era.",
+        self.createText("And time travelled to the Mesozoic Era.",
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5, "white")
 
     def update(self):
-        if not self.move_to(self.portal.rect, self.portal.rect.x, 0, 10):
+        if not self.move_to(self.portal.rect, self.portal.rect.x, 0, 7):
             self.portal.image.set_alpha(self.portal.image.get_alpha() - 2)
             return
 
