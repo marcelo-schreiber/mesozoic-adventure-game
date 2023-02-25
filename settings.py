@@ -2,9 +2,8 @@ import pygame
 
 pygame.init()
 
-# Add later to pyinstaller, examples:
-# pyinstaller --add-binary "ARCADECLASSIC.TTF;." --onefile breakout.py
-# pyinstaller --onefile --windowed --icon=app.ico app.py
+# command to generate .exe file:
+# pyinstaller --onefile --windowed --noconsole --icon=images/eoraptor.png app.py
 
 FPS = 30
 TILE_SIZE = 48
