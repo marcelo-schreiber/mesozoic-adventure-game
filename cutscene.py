@@ -122,8 +122,10 @@ class mainmenu(Cutscene):
 class thefall(Cutscene):
     def __init__(self):
         super().__init__()
-        self.createText("In the beggining, there was Blue.",
-                        WIDTH / 2, 64, "black")
+        self.createText("One day, blue was taking a walk",
+                        WIDTH / 2, TILE_SIZE*2, "black")
+        self.createText("When suddenly, she tripped and fell down a hill",
+                        WIDTH / 2, TILE_SIZE * 3, "black")
         self.createActor("sprites/bg.png", 0, 0, WIDTH, HEIGHT)
         self.createActor((79, 88, 41), 0, HEIGHT/2+TILE_SIZE,
                          WIDTH/2+TILE_SIZE*2, HEIGHT/2)
@@ -233,11 +235,11 @@ class theportal(Cutscene):
         self.portal = self.createActor(
             "sprites/portal.png", 0, -HEIGHT, WIDTH, HEIGHT*2)
 
-        self.createText("She time travelled to the Mesozoic Era.",
+        self.createText("And time travelled to the Mesozoic Era.",
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5, "white")
 
     def update(self):
-        if not self.move_to(self.portal.rect, self.portal.rect.x, 0, 10):
+        if not self.move_to(self.portal.rect, self.portal.rect.x, 0, 7):
             self.portal.image.set_alpha(self.portal.image.get_alpha() - 2)
             return
 
