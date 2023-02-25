@@ -50,10 +50,17 @@ class NonCollideTiles(pygame.sprite.Sprite):
         self.rect.y = y
 
 
-def draw_board(level):
+def draw_board(level, period):
     # each block should have a width of 30 pixels and a height of 30 pixels
     # (the board should be 30 blocks wide and 30 blocks high)
     # create new sprite group
+
+    name = "pteudoaustro"
+    if period == "Triassic":
+        name = "eoraptor"
+    else:
+        name = "yi qi"
+
     collide_tiles = pygame.sprite.Group()
     noncollide_tiles = pygame.sprite.Group()
     powerup_tiles = pygame.sprite.Group()
@@ -74,14 +81,14 @@ def draw_board(level):
                 powerup_tiles.add(PowerUpTile(
                     col * TILE_SIZE + (TILE_SIZE/6), row * TILE_SIZE + (TILE_SIZE/6), TILE_SIZE/1.5, TILE_SIZE/1.5, 'invinc'))
             elif level[row][col] == EORAPTOR:
-                enemy_group.add(Enemy('eoraptor', col * TILE_SIZE,
+                enemy_group.add(Enemy(name, col * TILE_SIZE,
                                 row * TILE_SIZE, TILE_SIZE, 1, 1, 1))
             elif level[row][col] == YIQI:
-                enemy_group.add(Enemy('yi qi', col * TILE_SIZE,
+                enemy_group.add(Enemy(name, col * TILE_SIZE,
                                 row * TILE_SIZE, TILE_SIZE, 1, 1, -1))
             elif level[row][col] == PTEDOAUSTRO:
                 enemy_group.add(
-                    Enemy('ptedoaustro', col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, 1, -1, -1))
+                    Enemy(name, col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, 1, -1, -1))
             elif level[row][col] == PLAYER:
                 player = Player(
                     col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, collide_tiles, powerup_tiles, noncollide_tiles, enemy_group)

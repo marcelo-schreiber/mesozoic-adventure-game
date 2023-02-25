@@ -107,9 +107,7 @@ class mainmenu(Cutscene):
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5)
         self.createText("press space, enter or escape to start",
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 3)
-        self.createText("MADE WITH THE BINDER CUTSCENE CLASS",
-                        WIDTH / 2, HEIGHT / 2)
-
+        pygame.mixer.music.play(-1)
     def update(self):
         pass
 
@@ -162,8 +160,11 @@ class level_pass(Cutscene):
         self.blue = self.createActor(
             "sprites/blue.png", 0, HEIGHT/2, TILE_SIZE, TILE_SIZE)
 
+        pygame.mixer.music.load('sounds/mushroom.mp3')
+        pygame.mixer.music.play(-1)
+
     def update(self):
-        if not self.move_to(self.blue.rect, WIDTH, self.blue.rect.y, 5):
+        if not self.move_to(self.blue.rect, WIDTH, self.blue.rect.y, 12):
             return
 
         self.is_running = False
