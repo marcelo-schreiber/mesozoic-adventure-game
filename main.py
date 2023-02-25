@@ -20,7 +20,7 @@ pygame.mixer.music.set_volume(0.2)
 
 def main():
     current_level_idx = 0
-    
+
     mainmenu().play()
     thefall().play()
     theportal().play()
@@ -36,7 +36,7 @@ def main():
     while current_level_idx < len(arrayMaps):
         current_map = arrayMaps[current_level_idx]
         collide_tiles, noncollide_tiles, powerup_tiles, enemy_group, player_group, player = draw_board(
-            current_map)
+            current_map, mesozoic_eras[current_level_idx])
 
         if has_passed_level:
             level_pass(mesozoic_eras[current_level_idx]).play()
