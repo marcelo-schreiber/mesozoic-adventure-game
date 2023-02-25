@@ -171,14 +171,13 @@ class credits(Cutscene):
     def __init__(self):
         super().__init__()
         texts = ["Made by Binder & Marcelo", "Pixel Art: Marcelo", "Enemy Pathfinding: Binder", "Art work feedback: Marcos A.K.A Dudu", "Player movement: Marcelo",
-                 "Testing: Fenoxer", "Level System: Binder", "Rendering System: Marcelo", "Cutscene System: Binder", "Cutscenes: Marcelo", "Level Design: Binder", "Bday boy: Leo"]
+                 "Testing: Fenoxer", "Level System: Binder", "Rendering System: Marcelo", "Cutscene System: Binder", "Cutscenes: Marcelo", "Level Design: Binder", "Made with 1006 lines of code", "Bday boy: Leo"]
 
         for i in range(len(texts)):
             self.createText(texts[i], WIDTH / 2,
                             HEIGHT + i*(HEIGHT)/2, "white")
-
         self.createText("THE END", WIDTH/2, HEIGHT +
-                        (len(texts)+1)*(HEIGHT)/2, "white")
+                        (len(texts)+2)*(HEIGHT)/2, "white")
 
     def update(self):
         for i in self.texts:

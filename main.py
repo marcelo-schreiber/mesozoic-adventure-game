@@ -19,12 +19,11 @@ pygame.mixer.music.set_volume(0.2)
 
 
 def main():
-
     mainmenu().play()
     thefall().play()
     theportal().play()
     current_level_idx = 0
-    
+
     # initial cutscene is the level pass too
 
     running = True
@@ -41,7 +40,8 @@ def main():
 
         if has_passed_level:
             level_pass(mesozoic_eras[current_level_idx]).play()
-            pygame.mixer.music.load(f'sounds/{mesozoic_eras[current_level_idx]}_theme.mp3')
+            pygame.mixer.music.load(
+                f'sounds/{mesozoic_eras[current_level_idx]}_theme.mp3')
             pygame.mixer.music.play(-1)
             has_passed_level = False
 
