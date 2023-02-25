@@ -20,10 +20,11 @@ class Cutscene:
                 self.type = "solid_color"
 
     class Text:
-        def __init__(self, string, x, y):
+        def __init__(self, string, x, y, color):
             self.text = string
             self.x = x
             self.y = y
+            self.color = color
 
     def __init__(self):
         self.is_running = True
@@ -37,8 +38,8 @@ class Cutscene:
         self.actors.append(actor)
         return actor
 
-    def createText(self, string, x, y):
-        text = self.Text(string, x, y)
+    def createText(self, string, x, y, color):
+        text = self.Text(string, x, y, color)
         self.texts.append(text)
         return text
 
@@ -72,7 +73,7 @@ class Cutscene:
 
     def write_texts(self):
         for i in self.texts:
-            self.screen.blit(font.render(i.text, True, "white"),
+            self.screen.blit(font.render(i.text, True, i.color),
                              self.calculate_text_position(i.text, i.x, i.y))
 
     def calculate_text_position(self, text, x, y):
@@ -104,9 +105,9 @@ class mainmenu(Cutscene):
     def __init__(self):
         super().__init__()
         self.createText("Blue\'s Mesozoic Adventure",
-                        WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5)
+                        WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5, "white")
         self.createText("press space, enter or escape to start",
-                        WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 3)
+                        WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 3, "white")
         pygame.mixer.music.play(-1)
     def update(self):
         pass
@@ -115,11 +116,11 @@ class mainmenu(Cutscene):
 class thefall(Cutscene):
     def __init__(self):
         super().__init__()
+        self.createText("In the beggining, there was Blue.",
+                        WIDTH / 2, 64, "black")
         self.createActor("sprites/bg.png", 0, 0, WIDTH, HEIGHT)
         self.createActor((79, 88, 41), 0, HEIGHT/2+TILE_SIZE,
                          WIDTH/2+TILE_SIZE*2, HEIGHT/2)
-        self.createText("In the beggining, there was Blue.",
-                        WIDTH / 2, 64)
         self.blue = self.createActor(
             "sprites/blue.png", 0, HEIGHT/2, TILE_SIZE, TILE_SIZE)
 
@@ -141,9 +142,9 @@ class game_over(Cutscene):
         self.image = self.createActor("images/leo.jpg", WIDTH/4,
                                       HEIGHT, WIDTH / 2, HEIGHT / 2)
         self.text = self.createText(
-            "After all, blue arrived in time for Leo's birthday.", WIDTH/2, HEIGHT/2)
+            "After all, blue arrived in time for Leo's birthday.", WIDTH/2, HEIGHT/2, "black")
         self.text = self.createText(
-            "Happy Birthday!", WIDTH/2, HEIGHT/2+TILE_SIZE)
+            "Happy Birthday!", WIDTH/2, HEIGHT/2+TILE_SIZE, "black")
 
     def update(self):
         if not self.move_to(self.image.rect, WIDTH/4, HEIGHT/4, 3):
@@ -153,10 +154,10 @@ class game_over(Cutscene):
 class level_pass(Cutscene):
     def __init__(self, text):
         super().__init__()
+        self.createText(f'{text} ->', WIDTH - (TILE_SIZE+25), HEIGHT/2, "black")
         self.createActor("sprites/bg.png", 0, 0, WIDTH, HEIGHT)
         self.createActor((79, 88, 41), 0, HEIGHT/2+TILE_SIZE,
                          WIDTH, HEIGHT)
-        self.createText(f'{text} ->', WIDTH - TILE_SIZE, HEIGHT/2)
         self.blue = self.createActor(
             "sprites/blue.png", 0, HEIGHT/2, TILE_SIZE, TILE_SIZE)
 
@@ -177,7 +178,7 @@ class theportal(Cutscene):
             "sprites/portal.png", 0, -HEIGHT, WIDTH, HEIGHT*2)
 
         self.createText("She time travelled to the Mesozoic Era.",
-                        WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5)
+                        WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5, "white")
 
     def update(self):
         if not self.move_to(self.portal.rect, self.portal.rect.x, 0, 10):
