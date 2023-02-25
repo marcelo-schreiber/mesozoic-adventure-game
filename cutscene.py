@@ -111,6 +111,8 @@ class mainmenu(Cutscene):
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 5, "white")
         self.createText("press space, enter or escape to start",
                         WIDTH / 2, HEIGHT / 2 - TILE_SIZE * 3, "white")
+        self.createText("T1GAMES FIRST PROJECT",
+                        WIDTH / 2, HEIGHT / 2, "red")
         pygame.mixer.music.play(-1)
 
     def update(self):
@@ -190,8 +192,8 @@ class level_pass(Cutscene):
 
         text_x = WIDTH - text_width
 
-        self.createActor((162, 124, 53), text_x - TILE_SIZE - TILE_SIZE//2,
-                         HEIGHT/2 - text_height, text_width + TILE_SIZE, text_height + TILE_SIZE//2)
+        self.createActor((162, 124, 53), text_x - text_width,
+                         HEIGHT/2 - text_height, text_width * 2, text_height + TILE_SIZE//2)
 
         text = self.createText(f'{text} =>', text_x, HEIGHT/2, "black")
 
