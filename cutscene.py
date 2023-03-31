@@ -203,7 +203,7 @@ class level_pass(Cutscene):
         self.createActor((162, 124, 53), text_x - text_width,
                          HEIGHT/2 - text_height, text_width * 2, text_height + TILE_SIZE//2)
 
-        text = self.createText(f'{text} =>', text_x, HEIGHT/2, "black")
+        text = self.createText(f'{text.capitalize()} =>', text_x, HEIGHT/2, "black")
 
         self.blue = self.createActor(
             "sprites/blue.png", 0, HEIGHT/2, TILE_SIZE, TILE_SIZE)
