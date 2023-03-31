@@ -68,6 +68,15 @@ class Enemy(Actor):
             noncollide_tiles, player.rect.x, player.rect.y)
         self.findpath(cY, cX, y // TILE_SIZE, x // TILE_SIZE, level)
 
+    def show_timer_pie_chart(self):
+        if self.is_attacking:
+            return
+
+        screen = pygame.display.get_surface()
+
+        pygame.draw.circle(screen, (255, 255, 255), (self.rect.x + 16, self.rect.y - 16), 16)
+        pygame.draw.arc(screen, (0, 0, 0), (self.rect.x + 8, self.rect.y - 24, 16, 16), 0, 2 * 3.14 * (self.time / (self.timeout_seconds * FPS)), 5)
+
     def timer(self):
         self.time += 1
         if self.time >= self.timeout_seconds * FPS:
@@ -146,6 +155,7 @@ class Enemy(Actor):
         if not self.is_attacking:
             self.timer()
 
+        self.show_timer_pie_chart()
         self.next_pellet(player, level)
         self.move()
 
