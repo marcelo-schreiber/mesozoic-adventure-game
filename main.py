@@ -30,7 +30,7 @@ def main():
     is_paused = False
     has_passed_level = True
 
-    pygame.mixer.music.load('sounds/triassic_theme.mp3')
+    pygame.mixer.music.load('sounds/Triassic_theme.mp3')
     pygame.mixer.music.play(-1)  # -1 is for infinite loop of the music
 
     while current_level_idx < len(arrayMaps):
