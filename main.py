@@ -14,8 +14,9 @@ timer = pygame.time.Clock()
 
 # set caption
 pygame.display.set_caption('Blue\'s Adventure in the Mesozoic Era')
+pygame.display.set_icon(pygame.image.load('sprites/blue.png'))
 pygame.mixer.music.load('sounds/menu_theme.mp3')
-pygame.mixer.music.set_volume(0.2)
+pygame.mixer.music.set_volume(0.3)
 
 
 def main():
