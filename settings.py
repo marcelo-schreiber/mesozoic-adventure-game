@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 # command to generate .exe file:
-# pyinstaller --onefile --windowed --noconsole --icon=images/blueicon.ico main.py
+# python -m PyInstaller --onefile --windowed --noconsole main.py
 
 FPS = 30
 TILE_SIZE = 64
