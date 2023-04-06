@@ -1,5 +1,5 @@
 import pygame
-import random
+from random import randint
 from enemy import Enemy
 from player import Player
 from settings import TILE_SIZE
@@ -9,16 +9,17 @@ WALL = 1
 INVINCIBLE = 2
 ZAWARUDO = 3
 PLAYER = 4
-EORAPTOR = 5
-YIQI = 6
-PTEDOAUSTRO = 7
 
+# priority of movement path finding
+RIGHT_UP = 5
+RIGHT_DOWN = 6
+LEFT_DOWN = 7
 
 class CollideTile(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, color):
         super().__init__()
         self.image = pygame.image.load(
-            f'sprites/grass{random.randint(0, 1)}.png').convert_alpha()
+            f'sprites/grass{randint(0, 1)}.png').convert_alpha()
         self.image = pygame.transform.scale(
             self.image, (width, height))
         self.rect = self.image.get_rect()
@@ -42,7 +43,7 @@ class NonCollideTiles(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, color):
         super().__init__()
         self.image = pygame.image.load(
-            f'sprites/dirt{random.randint(0, 1)}.png').convert_alpha()
+            f'sprites/dirt{randint(0, 1)}.png').convert_alpha()
         self.image = pygame.transform.scale(
             self.image, (width, height))
         self.rect = self.image.get_rect()
@@ -56,10 +57,16 @@ def draw_board(level, period):
     # create new sprite group
 
     name = "ptedoaustro"
+
     if period == "Triassic":
         name = "eoraptor"
     elif period == "Jurassic":
         name = "yi qi"
+    elif period == "Cretaceous":
+        name = "ptedoaustro"
+    elif period == "Cenozoic":
+        name = "queroquero"
+
 
     collide_tiles = pygame.sprite.Group()
     noncollide_tiles = pygame.sprite.Group()
@@ -80,13 +87,13 @@ def draw_board(level, period):
             elif level[row][col] == INVINCIBLE:
                 powerup_tiles.add(PowerUpTile(
                     col * TILE_SIZE + (TILE_SIZE/6), row * TILE_SIZE + (TILE_SIZE/6), TILE_SIZE/1.5, TILE_SIZE/1.5, 'invinc'))
-            elif level[row][col] == EORAPTOR:
+            elif level[row][col] == RIGHT_UP:
                 enemy_group.add(Enemy(name, col * TILE_SIZE,
                                 row * TILE_SIZE, TILE_SIZE, 1, 1, 1))
-            elif level[row][col] == YIQI:
+            elif level[row][col] == RIGHT_DOWN:
                 enemy_group.add(Enemy(name, col * TILE_SIZE,
                                 row * TILE_SIZE, TILE_SIZE, 1, 1, -1))
-            elif level[row][col] == PTEDOAUSTRO:
+            elif level[row][col] == LEFT_DOWN:
                 enemy_group.add(
                     Enemy(name, col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, 1, -1, -1))
             elif level[row][col] == PLAYER:
